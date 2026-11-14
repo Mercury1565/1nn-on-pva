@@ -15,3 +15,4 @@
 [2026-11-14T05:19:24Z] remote: clock read (read-only) after -> 0
 [2026-11-14T05:22:01Z] remote: rm -rf /tmp/<user>-pva-knn1-bt-run2 (CLAUDE.md: remove test deployments when done) -> 0
 [2026-11-14T05:34:20Z] source-manifest.sha256 written (freshness check, before post-run comment cleanup)
+[2026-11-14T06:07:28Z] END emu test -> 0

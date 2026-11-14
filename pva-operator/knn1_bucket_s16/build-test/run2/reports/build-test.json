@@ -1,0 +1,1777 @@
+{
+  "schema_version": "2.0",
+  "verdict": "PASSED",
+  "reason": "All stages of correctness-and-performance passed for the current source (EMU 31/31, hardware 31/31, 1000-sample performance on two KITTI cases).",
+  "failed_stage": "NONE",
+  "operator": "knn1_bucket_s16",
+  "test_scope": "correctness-and-performance",
+  "emulator": {
+    "policy": "required",
+    "build_mode": "EMU",
+    "configure_options": [
+      "-DPVA_BUILD_MODE=EMU",
+      "-DPVA_DEFAULT_GEN=GEN3",
+      "-DPVA_ONLY_BUILD_GENS=GEN3"
+    ],
+    "status": "PASSED",
+    "reason": "run with PVA_GEN=GEN3, full 31-case matrix"
+  },
+  "result_time_utc": "2026-11-14T06:07:50Z",
+  "source": {
+    "project_root": "/home/sitotaem/pva-knn-study",
+    "build_sdk_version": "2.10.1",
+    "build_safety_variant": "non-safety",
+    "compiler_backend": "NVVPU",
+    "manifest": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/source-manifest.sha256",
+    "git_identity": "not available (no git metadata)"
+  },
+  "target": {
+    "host": "loki (35.3.235.70), user hermon",
+    "architecture": "aarch64",
+    "kernel": "6.8.12-tegra",
+    "bsp": "L4T R38 REVISION 4.0 (JetPack 7.1), Jetson AGX Thor",
+    "cupva_runtime": "pva-sdk-2.10-l4t 2.10.1 (/opt/nvidia/pva-sdk-2.10)",
+    "runtime_version": "2.10.1",
+    "runtime_safety_variant": "non-safety",
+    "runtime_match": "PASSED",
+    "clock_setup": "PASSED",
+    "expected_clock_and_power_state": "MAXN power mode, clocks not pinned (clock_mode=MAXN-dvfs, shared machine; user rule). CPU observed at 2601 MHz in tegrastats; PVA clock not readable without root.",
+    "clock_evidence_before": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/clocks-before.txt",
+    "clock_evidence_after": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/clocks-after.txt"
+  },
+  "stages": [
+    {
+      "name": "INPUT",
+      "status": "PASSED",
+      "reason": "Doctor READY, reference lock d1315d2a\u2026 matches, handoff VALID (17 req, 31 correctness, 2 perf)",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/source-identity.txt"
+    },
+    {
+      "name": "EMU_BUILD",
+      "status": "PASSED",
+      "reason": "PVA_BUILD_MODE=EMU GEN3 build",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/emu-build.log"
+    },
+    {
+      "name": "EMU_TEST",
+      "status": "PASSED",
+      "reason": "31/31 cases PASS on EMU",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/emu-test.log"
+    },
+    {
+      "name": "L4T_BUILD",
+      "status": "PASSED",
+      "reason": "Release, PVA_BUILD_MODE=L4T, GEN3, NVVPU, PVA_DISASSEMBLE=ON, K1_BUCKET=128",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/l4t-build.log"
+    },
+    {
+      "name": "LISTING",
+      "status": "PASSED",
+      "reason": "scan loop vectorized: VLDH_S agen broadcast loads, VSumSqHHW, VMinLTW, VMuxW, software-pipelined 4 points per iteration, no spills",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/listing.txt"
+    },
+    {
+      "name": "TARGET_PROBE",
+      "status": "PASSED",
+      "reason": "aarch64, 6.8.12-tegra, L4T R38.4, pva-sdk-2.10-l4t 2.10.1, user in video group",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/target-probe.log"
+    },
+    {
+      "name": "DEPLOY",
+      "status": "PASSED",
+      "reason": "install tree tar to /tmp/<user>-pva-knn1-bt-run2, sha256 verified, cupva 2.10 resolved",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/deploy.log"
+    },
+    {
+      "name": "HARDWARE_TEST",
+      "status": "PASSED",
+      "reason": "31/31 cases PASS on loki; sample PASS",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/hw-test.log"
+    },
+    {
+      "name": "CLOCK",
+      "status": "PASSED",
+      "reason": "clock_mode=MAXN-dvfs: MAXN before and after (read-only); not pinned per CLAUDE.md (CONFLICT-CLOCKS)",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/clocks-before.txt"
+    },
+    {
+      "name": "PROFILE",
+      "status": "PASSED",
+      "reason": "100 warm-ups + 1000 samples per case, Profiling Stream, correctness gate PASS on every case",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/perf.log"
+    },
+    {
+      "name": "COMPARE",
+      "status": "NOT_RUN",
+      "reason": "no performance target or acceptance rule (acceptance not_set)",
+      "command_exit_code": null,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/perf.log"
+    },
+    {
+      "name": "SOURCE_FRESHNESS",
+      "status": "PASSED",
+      "reason": "build inputs unchanged; only change: pva-operator/knn1_bucket_s16/capi/README.md (documentation, edited after the run to update its example output; not compiled or installed by the test build)",
+      "command_exit_code": 0,
+      "log": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/source-manifest.sha256"
+    }
+  ],
+  "correctness": [
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-A",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][122987], refs int16[3][122919], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=122987 nr=122919 teams=7687 buckets=961 fetched=22449 fetched_per_team=2.92039 sum_dist2=51148720"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-B",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][122563], refs int16[3][122753], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=122563 nr=122753 teams=7661 buckets=960 fetched=25158 fetched_per_team=3.28391 sum_dist2=302125029"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-C",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][123714], refs int16[3][123867], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=123714 nr=123867 teams=7733 buckets=968 fetched=22906 fetched_per_team=2.96211 sum_dist2=267022911"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-D",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][123298], refs int16[3][123431], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=123298 nr=123431 teams=7707 buckets=965 fetched=21904 fetched_per_team=2.84209 sum_dist2=263371403"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-A-SWAP",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][122919], refs int16[3][122987], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=122919 nr=122987 teams=7683 buckets=961 fetched=22820 fetched_per_team=2.97019 sum_dist2=51025322"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-16K",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16384], refs int16[3][16384], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16384 nr=16384 teams=1024 buckets=128 fetched=2302 fetched_per_team=2.24805 sum_dist2=32839805"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-UNEQUAL",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][4096], refs int16[3][122919], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=4096 nr=122919 teams=256 buckets=961 fetched=1332 fetched_per_team=5.20312 sum_dist2=4676428"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-KITTI-SELF",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16384], refs int16[3][16384], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16384 nr=16384 teams=1024 buckets=128 fetched=1821 fetched_per_team=1.77832 sum_dist2=0"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-MAX-131072",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][131072], refs int16[3][131072], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=131072 nr=131072 teams=8192 buckets=1024 fetched=38448 fetched_per_team=4.69336 sum_dist2=10335670310"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-1X1",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1], refs int16[3][1], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1 nr=1 teams=1 buckets=1 fetched=1 fetched_per_team=1 sum_dist2=9154422"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-1X512",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1], refs int16[3][512], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1 nr=512 teams=1 buckets=4 fetched=2 fetched_per_team=2 sum_dist2=204627"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-16X1",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16], refs int16[3][1], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16 nr=1 teams=1 buckets=1 fetched=1 fetched_per_team=1 sum_dist2=316980738"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-15X511",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][15], refs int16[3][511], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=15 nr=511 teams=1 buckets=4 fetched=4 fetched_per_team=4 sum_dist2=3354203"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-16X512",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16], refs int16[3][512], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16 nr=512 teams=1 buckets=4 fetched=4 fetched_per_team=4 sum_dist2=3271854"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-17X513",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][17], refs int16[3][513], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=17 nr=513 teams=2 buckets=5 fetched=5 fetched_per_team=2.5 sum_dist2=3409418"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-513X17",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][513], refs int16[3][17], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=513 nr=17 teams=33 buckets=1 fetched=33 fetched_per_team=1 sum_dist2=957540993"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SMALL-1000X3000",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1000], refs int16[3][3000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1000 nr=3000 teams=63 buckets=24 fetched=263 fetched_per_team=4.1746 sum_dist2=65423830"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-EXTREMES",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][32], refs int16[3][5], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=32 nr=5 teams=2 buckets=1 fetched=2 fetched_per_team=1 sum_dist2=27648000000"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-DUPLICATES-GRID",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][4000], refs int16[3][6000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=4000 nr=6000 teams=250 buckets=47 fetched=553 fetched_per_team=2.212 sum_dist2=0"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-ALL-REFS-IDENTICAL",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1000], refs int16[3][2000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1000 nr=2000 teams=63 buckets=16 fetched=63 fetched_per_team=1 sum_dist2=145822220189"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-DEGENERATE-LINE",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1000], refs int16[3][3000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1000 nr=3000 teams=63 buckets=24 fetched=89 fetched_per_team=1.4127 sum_dist2=30705"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-DEGENERATE-PLANE",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][2000], refs int16[3][5000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=2000 nr=5000 teams=125 buckets=40 fetched=282 fetched_per_team=2.256 sum_dist2=74707564"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-FAR-CLUSTERS",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1200], refs int16[3][6000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1200 nr=6000 teams=75 buckets=47 fetched=427 fetched_per_team=5.69333 sum_dist2=55061939485"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-REPEATED-SUBMISSION",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "100 submissions identical and correct"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-REPREPARE-SIZES",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "5-step sequence correct"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-ASYNC-FENCE",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "no sentinel left, case correct"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-SUMDIST2-INT64",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "3 sums > 2^31 exact"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-STATS-VS-MODEL",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "kitti_a:fetched=22449,teams=7687 kitti_b:fetched=25158,teams=7661 kitti_c:fetched=22906,teams=7733 kitti_d:fetched=21904,teams=7707 "
+    },
+    {
+      "environment": "EMU",
+      "case": "ERR-ORDER",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "all out-of-order calls rejected"
+    },
+    {
+      "environment": "EMU",
+      "case": "ERR-ARGS",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "bad arguments rejected, later valid run correct"
+    },
+    {
+      "environment": "EMU",
+      "case": "CORR-NO-ALIAS",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "disjoint buffers, inputs unchanged"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-A",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][122987], refs int16[3][122919], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=122987 nr=122919 teams=7687 buckets=961 fetched=22449 fetched_per_team=2.92039 sum_dist2=51148720"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-B",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][122563], refs int16[3][122753], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=122563 nr=122753 teams=7661 buckets=960 fetched=25158 fetched_per_team=3.28391 sum_dist2=302125029"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-C",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][123714], refs int16[3][123867], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=123714 nr=123867 teams=7733 buckets=968 fetched=22906 fetched_per_team=2.96211 sum_dist2=267022911"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-D",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][123298], refs int16[3][123431], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=123298 nr=123431 teams=7707 buckets=965 fetched=21904 fetched_per_team=2.84209 sum_dist2=263371403"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-A-SWAP",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][122919], refs int16[3][122987], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=122919 nr=122987 teams=7683 buckets=961 fetched=22820 fetched_per_team=2.97019 sum_dist2=51025322"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-16K",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16384], refs int16[3][16384], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16384 nr=16384 teams=1024 buckets=128 fetched=2302 fetched_per_team=2.24805 sum_dist2=32839805"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-UNEQUAL",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][4096], refs int16[3][122919], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=4096 nr=122919 teams=256 buckets=961 fetched=1332 fetched_per_team=5.20312 sum_dist2=4676428"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-KITTI-SELF",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16384], refs int16[3][16384], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16384 nr=16384 teams=1024 buckets=128 fetched=1821 fetched_per_team=1.77832 sum_dist2=0"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-MAX-131072",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][131072], refs int16[3][131072], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=131072 nr=131072 teams=8192 buckets=1024 fetched=38448 fetched_per_team=4.69336 sum_dist2=10335670310"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-1X1",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1], refs int16[3][1], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1 nr=1 teams=1 buckets=1 fetched=1 fetched_per_team=1 sum_dist2=9154422"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-1X512",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1], refs int16[3][512], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1 nr=512 teams=1 buckets=4 fetched=2 fetched_per_team=2 sum_dist2=204627"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-16X1",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16], refs int16[3][1], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16 nr=1 teams=1 buckets=1 fetched=1 fetched_per_team=1 sum_dist2=316980738"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-15X511",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][15], refs int16[3][511], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=15 nr=511 teams=1 buckets=4 fetched=4 fetched_per_team=4 sum_dist2=3354203"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-16X512",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][16], refs int16[3][512], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=16 nr=512 teams=1 buckets=4 fetched=4 fetched_per_team=4 sum_dist2=3271854"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-17X513",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][17], refs int16[3][513], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=17 nr=513 teams=2 buckets=5 fetched=5 fetched_per_team=2.5 sum_dist2=3409418"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-513X17",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][513], refs int16[3][17], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=513 nr=17 teams=33 buckets=1 fetched=33 fetched_per_team=1 sum_dist2=957540993"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SMALL-1000X3000",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1000], refs int16[3][3000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1000 nr=3000 teams=63 buckets=24 fetched=263 fetched_per_team=4.1746 sum_dist2=65423830"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-EXTREMES",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][32], refs int16[3][5], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=32 nr=5 teams=2 buckets=1 fetched=2 fetched_per_team=1 sum_dist2=27648000000"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-DUPLICATES-GRID",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][4000], refs int16[3][6000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=4000 nr=6000 teams=250 buckets=47 fetched=553 fetched_per_team=2.212 sum_dist2=0"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-ALL-REFS-IDENTICAL",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1000], refs int16[3][2000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1000 nr=2000 teams=63 buckets=16 fetched=63 fetched_per_team=1 sum_dist2=145822220189"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-DEGENERATE-LINE",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1000], refs int16[3][3000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1000 nr=3000 teams=63 buckets=24 fetched=89 fetched_per_team=1.4127 sum_dist2=30705"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-DEGENERATE-PLANE",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][2000], refs int16[3][5000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=2000 nr=5000 teams=125 buckets=40 fetched=282 fetched_per_team=2.256 sum_dist2=74707564"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-FAR-CLUSTERS",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "queries int16[3][1200], refs int16[3][6000], planar, tight pitch; bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "nq=1200 nr=6000 teams=75 buckets=47 fetched=427 fetched_per_team=5.69333 sum_dist2=55061939485"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-REPEATED-SUBMISSION",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "100 submissions identical and correct"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-REPREPARE-SIZES",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "5-step sequence correct"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-ASYNC-FENCE",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "no sentinel left, case correct"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-SUMDIST2-INT64",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "3 sums > 2^31 exact"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-STATS-VS-MODEL",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "kitti_a:fetched=22449,teams=7687 kitti_b:fetched=25158,teams=7661 kitti_c:fetched=22906,teams=7733 kitti_d:fetched=21904,teams=7707 "
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "ERR-ORDER",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "all out-of-order calls rejected"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "ERR-ARGS",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "bad arguments rejected, later valid run correct"
+    },
+    {
+      "environment": "HARDWARE",
+      "case": "CORR-NO-ALIAS",
+      "status": "PASSED",
+      "inputs": [
+        {
+          "name": "queries, refs",
+          "shape_format_pitch_parameters": "API/behaviour case (see tests/knn1_bucket_s16_test.cpp); bucket 128, vpus 2, cpu_threads 1"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dist2 (int32), idx (int32)",
+          "status": "PASSED",
+          "reference": "scipy cKDTree exact 1-NN on quantized int16 inputs, d2 in int64 (testdata/knn1_bucket, src/gen_knn1_vectors.py); idx checked by host recomputation of d2",
+          "comparison": "Exact",
+          "absolute_tolerance": 0,
+          "relative_tolerance": null,
+          "maximum_error": 0
+        }
+      ],
+      "detail": "disjoint buffers, inputs unchanged"
+    }
+  ],
+  "performance": [
+    {
+      "case": "PERF-KITTI-A total_ns",
+      "metric": "PVA task time (profiler TOTAL_TIME)",
+      "method": "Profiling Stream",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 13825400.0,
+      "maximum": 13837100.0,
+      "mean": 13827396.9,
+      "median": 13827000.0,
+      "p99": 13832900.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    },
+    {
+      "case": "PERF-KITTI-A prepare_ns",
+      "metric": "prepare() host time, 1 thread",
+      "method": "host steady_clock",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 15002500.0,
+      "maximum": 15269500.0,
+      "mean": 15061863.5,
+      "median": 15055200.0,
+      "p99": 15165300.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    },
+    {
+      "case": "PERF-KITTI-A results_ns",
+      "metric": "results() host time",
+      "method": "host steady_clock",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 310122.0,
+      "maximum": 366362.0,
+      "mean": 322924.3,
+      "median": 322123.0,
+      "p99": 342539.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    },
+    {
+      "case": "PERF-KITTI-A e2e_ns",
+      "metric": "end to end (prepare + submit..fence + results)",
+      "method": "host steady_clock",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 29184100.0,
+      "maximum": 29442300.0,
+      "mean": 29244491.7,
+      "median": 29239300.0,
+      "p99": 29345800.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    },
+    {
+      "case": "PERF-KITTI-B total_ns",
+      "metric": "PVA task time (profiler TOTAL_TIME)",
+      "method": "Profiling Stream",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 15260200.0,
+      "maximum": 15270900.0,
+      "mean": 15261511.2,
+      "median": 15261300.0,
+      "p99": 15267500.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    },
+    {
+      "case": "PERF-KITTI-B prepare_ns",
+      "metric": "prepare() host time, 1 thread",
+      "method": "host steady_clock",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 14909700.0,
+      "maximum": 15543700.0,
+      "mean": 14969724.2,
+      "median": 14952500.0,
+      "p99": 15146700.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    },
+    {
+      "case": "PERF-KITTI-B results_ns",
+      "metric": "results() host time",
+      "method": "host steady_clock",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 317993.0,
+      "maximum": 358521.0,
+      "mean": 332367.5,
+      "median": 331797.0,
+      "p99": 347658.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    },
+    {
+      "case": "PERF-KITTI-B e2e_ns",
+      "metric": "end to end (prepare + submit..fence + results)",
+      "method": "host steady_clock",
+      "unit": "ns",
+      "warmups": 100,
+      "samples": 1000,
+      "minimum": 30531900.0,
+      "maximum": 31185200.0,
+      "mean": 30596181.5,
+      "median": 30580300.0,
+      "p99": 30785500.0,
+      "target": null,
+      "acceptance": "NOT_REQUIRED"
+    }
+  ],
+  "evidence": [
+    {
+      "name": "source manifest before",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/source-manifest-before.sha256",
+      "sha256": "737d032297b45c802abeeb5dc11ba82523a8ff133f8920d5c434cd4b4c9ee636"
+    },
+    {
+      "name": "source manifest after",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/source-manifest.sha256",
+      "sha256": "39ef090f7406e8dfc41d2aed318e6815d7a6add1d62846ad04c1ed8c2985af36"
+    },
+    {
+      "name": "commands log",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/commands.log",
+      "sha256": "041620074d03ead3ae979c05b62889b712f22b1f7ec2eb1f6f76ed6cc0c05d1e"
+    },
+    {
+      "name": "compiler listing",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/build-l4t/knn1_bucket_s16_dev__gen3.lst",
+      "sha256": "9af3e950cbfd7f79b0700d14a1b685304f945d5f0e7ca48a415ffeec5f0398c0"
+    },
+    {
+      "name": "listing notes",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/listing.txt",
+      "sha256": "ed81ebbdfcda377fdefc19dcc5dbc814c563822499ec9aa32843153a9e204f7b"
+    },
+    {
+      "name": "EMU test log",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/emu-test.log",
+      "sha256": "7afe7c5de1d0c2758101cd946af220293293c0beb8fa253fe08af68caa682aca"
+    },
+    {
+      "name": "hardware test log",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/hw-test.log",
+      "sha256": "7afe7c5de1d0c2758101cd946af220293293c0beb8fa253fe08af68caa682aca"
+    },
+    {
+      "name": "sample log",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/hw-sample.log",
+      "sha256": "c8ec979fb314c23e370fe582dacf1c8971446827ead2dbfc32e864e22ee32bc3"
+    },
+    {
+      "name": "deploy archive",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/deploy.tar.gz",
+      "sha256": "f4026f7feb540ace2ff0b3ee68f3138cf921c46890636bf0b3a3697cbcec3ea1"
+    },
+    {
+      "name": "deploy manifest",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/deploy-manifest.sha256",
+      "sha256": "b9732174dc3a7b85c952ac245d0cbf1eeabde3025cad5742be89f3f936e92044"
+    },
+    {
+      "name": "perf log",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/perf.log",
+      "sha256": "abf1670aa5f17a89905ecd2d6aec7da13a250c4e768517c5e4530531f017bf58"
+    },
+    {
+      "name": "perf kitti_a",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/perf/perf_kitti_a.csv",
+      "sha256": "319271fb3fde5b44db19070475d18077c84fa230d2a726199eba3fece51add1e"
+    },
+    {
+      "name": "perf kitti_b",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/perf/perf_kitti_b.csv",
+      "sha256": "6f1a8f97f98e4babedad44169155078805a777903206360e5e8f942e9726793f"
+    },
+    {
+      "name": "perf kitti_a threads=8 (supplementary)",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/perf/perf_kitti_a_threads8.csv",
+      "sha256": "3284404c3c456a28d2a3b59405c852f6a40fdb0c1e68dd27b2f86c252019b09b"
+    },
+    {
+      "name": "perf kitti_b threads=8 (supplementary)",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/perf/perf_kitti_b_threads8.csv",
+      "sha256": "e3973d75ac3f640d5ca0c0675834aa565bd4659ae93fb07a0205fa092f8320fe"
+    },
+    {
+      "name": "tegrastats",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/perf/perf.tegrastats.txt",
+      "sha256": "bd7d4cec18dbc88a98a0f153a299d49ba24276ca288d9e2e27ac148a5720b0d3"
+    },
+    {
+      "name": "clocks before",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/clocks-before.txt",
+      "sha256": "717d3f4c834496ea15341c27d9c46a30ef55cd47aff4f62680517b0799a1b89c"
+    },
+    {
+      "name": "clocks after",
+      "path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/logs/clocks-after.txt",
+      "sha256": "9475b9cb2d2c2f5bfc7d9066ff606793976c7d39b902703df2e5bed8b432aad3"
+    }
+  ],
+  "remote_directory": "/tmp/<user>-pva-knn1-bt-run2 (removed after the run, as CLAUDE.md requires)",
+  "post_run_changes": {
+    "date": "2026-11-14",
+    "kind": "comments, log redaction (hermon -> <user>), build-host Makefile",
+    "code_changed": false,
+    "check": "L4T rebuild: VPU merged.bin byte-identical; host .text/.rodata identical for all programs and libknn1_distance.so"
+  }
+}

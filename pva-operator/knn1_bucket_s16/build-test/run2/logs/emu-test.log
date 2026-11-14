@@ -21,3 +21,12 @@ RESULT CORR-ALL-REFS-IDENTICAL PASS nq=1000 nr=2000 teams=63 buckets=16 fetched=
 RESULT CORR-DEGENERATE-LINE PASS nq=1000 nr=3000 teams=63 buckets=24 fetched=89 fetched_per_team=1.4127 sum_dist2=30705
 RESULT CORR-DEGENERATE-PLANE PASS nq=2000 nr=5000 teams=125 buckets=40 fetched=282 fetched_per_team=2.256 sum_dist2=74707564
 RESULT CORR-FAR-CLUSTERS PASS nq=1200 nr=6000 teams=75 buckets=47 fetched=427 fetched_per_team=5.69333 sum_dist2=55061939485
+RESULT CORR-REPEATED-SUBMISSION PASS 100 submissions identical and correct
+RESULT CORR-REPREPARE-SIZES PASS 5-step sequence correct
+RESULT CORR-ASYNC-FENCE PASS no sentinel left, case correct
+RESULT CORR-SUMDIST2-INT64 PASS 3 sums > 2^31 exact
+RESULT CORR-STATS-VS-MODEL PASS kitti_a:fetched=22449,teams=7687 kitti_b:fetched=25158,teams=7661 kitti_c:fetched=22906,teams=7733 kitti_d:fetched=21904,teams=7707 
+RESULT ERR-ORDER PASS all out-of-order calls rejected
+RESULT ERR-ARGS PASS bad arguments rejected, later valid run correct
+RESULT CORR-NO-ALIAS PASS disjoint buffers, inputs unchanged
+SUMMARY pass=31 fail=0

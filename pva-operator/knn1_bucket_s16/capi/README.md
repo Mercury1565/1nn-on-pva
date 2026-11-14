@@ -22,6 +22,7 @@ equally close, either index may be returned.
 ```
 make -C $KNN1 run        # cloud distance for the frame pair set in the Makefile
 make -C $KNN1 python     # the same through Python
+make -C $KNN1 memory     # the same from arrays already in memory (pipeline style)
 make -C $KNN1 c          # the same through C
 make -C $KNN1 selftest   # self-test on random clouds
 ```

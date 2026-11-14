@@ -53,7 +53,7 @@ package: build
 	@cp $(BUILD)/libknn1_distance.so $(PKG)/lib/
 	@cp $(SRC)/capi/knn1_distance.h $(PKG)/include/
 	@cp $(SRC)/capi/knn1_distance.py $(PKG)/python/
-	@cp $(SRC)/capi/example.c $(SRC)/capi/example.py $(PKG)/examples/
+	@cp $(SRC)/capi/example.c $(SRC)/capi/example*.py $(PKG)/examples/
 	@cp $(SRC)/capi/Makefile $(SRC)/capi/README.md $(PKG)/
 	@{ echo "knn1 PVA kernel (operator knn1_bucket_s16), built $$(date -u +%F' '%H:%M) UTC with 'make deploy'"; \
 	   echo "Source fingerprint: $$(cd $(SRC) && sha256sum $(SOURCES) | sha256sum | cut -c1-16)"; \

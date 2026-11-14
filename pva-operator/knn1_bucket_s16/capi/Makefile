@@ -2,6 +2,7 @@
 #
 #   make run        cloud distance with the command-line program (+ per-point answers in OUT_DIR)
 #   make python     the same through Python (examples/example.py)
+#   make memory     the same from arrays in memory (examples/example_memory.py)
 #   make c          build and run the C example (examples/example.c)
 #   make selftest   built-in self-test on random clouds
 #   make clean      remove what these targets created in OUT_DIR and BUILD_DIR
@@ -31,10 +32,10 @@ PYTHON ?= /usr/bin/python3
 # Do not write __pycache__ into this (shared, read-only) folder.
 export PYTHONDONTWRITEBYTECODE := 1
 
-.PHONY: help run python c selftest clean check-inputs
+.PHONY: help run python memory c selftest clean check-inputs
 
 help:
-	@sed -n '3,7p' $(KNN1)/Makefile | sed 's/^# //'
+	@sed -n '3,8p' $(KNN1)/Makefile | sed 's/^# //'
 
 check-inputs:
 	@test -r "$(PC_REF)"     || { echo "cannot read PC_REF=$(PC_REF)"; exit 1; }
@@ -46,6 +47,9 @@ run: check-inputs
 
 python: check-inputs
 	$(PYTHON) $(KNN1)/examples/example.py $(PC_REF) $(PC_QUERIES)
+
+memory: check-inputs
+	$(PYTHON) $(KNN1)/examples/example_memory.py $(PC_REF) $(PC_QUERIES)
 
 $(BUILD_DIR)/knn1_example: $(KNN1)/examples/example.c $(KNN1)/include/knn1_distance.h
 	@mkdir -p $(BUILD_DIR)
