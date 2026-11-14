@@ -1,0 +1,16 @@
+aarch64
+6.8.12-tegra
+# R38 (release), REVISION: 4.0, GCID: 43443517, BOARD: generic, EABI: aarch64, DATE: Wed Dec 31 00:15:19 UTC 2025
+# KERNEL_VARIANT: oot
+TARGET_USERSPACE_LIB_DIR=nvidia
+TARGET_USERSPACE_LIB_DIR_PATH=usr/lib/aarch64-linux-gnu/nvidia
+INSTALL_TYPE=openrm
+pva-sdk-2.10-l4t 2.10.1
+pva-sdk-2.9-l4t 2.9.0
+	libcupva_host_utils.so.2.10 (libc6,AArch64) => /opt/nvidia/pva-sdk-2.10/lib/aarch64-linux-gnu/libcupva_host_utils.so.2.10
+	libcupva_host_utils.so.2.9 (libc6,AArch64) => /opt/nvidia/pva-sdk-2.9/lib/aarch64-linux-gnu/libcupva_host_utils.so.2.9
+	libcupva_host.so.2.10 (libc6,AArch64) => /opt/nvidia/pva-sdk-2.10/lib/aarch64-linux-gnu/libcupva_host.so.2.10
+	libcupva_host.so.2.9 (libc6,AArch64) => /opt/nvidia/pva-sdk-2.9/lib/aarch64-linux-gnu/libcupva_host.so.2.9
+<user> sudo audio video users i2c gdm gpio weston-launch render
+/dev/nvme0n1p1  936G  849G   40G  96% /
+/dev/nvme0n1p1  936G  849G   40G  96% /

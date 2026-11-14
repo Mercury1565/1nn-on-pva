@@ -1,0 +1,10 @@
+2026-11-13T23:15:55-05:00
+ 23:15:55 up 39 days,  1:59, 12 users,  load average: 1.17, 1.19, 1.18
+USER     %CPU COMMAND
+root     53.9 kworker/u28:0-ext4-rsv-conversion
+root     41.1 kworker/u28:1+devfreq_wq
+root      3.8 sshd
+root      1.6 disp_eng_share_thread
+root      0.8 nv_queue
+<user>    0.4 MainThread
+<user>    0.3 code-c4453f8ea4

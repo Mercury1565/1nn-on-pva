@@ -1,0 +1,7 @@
+== bin/knn1_bucket_s16_perf
+	libcupva_host_utils.so.2.10 => /opt/nvidia/pva-sdk-2.10/lib/aarch64-linux-gnu/libcupva_host_utils.so.2.10 (0x0000ffffac5e0000)
+	libcupva_host.so.2.10 => /opt/nvidia/pva-sdk-2.10/lib/aarch64-linux-gnu/libcupva_host.so.2.10 (0x0000ffffac500000)
+== bin/knn1_bucket_s16_sample
+	libcupva_host.so.2.10 => /opt/nvidia/pva-sdk-2.10/lib/aarch64-linux-gnu/libcupva_host.so.2.10 (0x0000ffffabb80000)
+== bin/knn1_bucket_s16_test
+	libcupva_host.so.2.10 => /opt/nvidia/pva-sdk-2.10/lib/aarch64-linux-gnu/libcupva_host.so.2.10 (0x0000ffffb2330000)

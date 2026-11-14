@@ -1,0 +1,161 @@
+{
+  "additional_evidence_used": [
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/results/bucket_compare.csv",
+      "category": "workload",
+      "relative_path": "results/bucket_compare.csv",
+      "requirement_ids": [
+        "REQ-PREP"
+      ],
+      "sha256": "057cfd7a4b0e69b0b1b0c0122114587f43ca975d8884769a72bc41fc7ac221a2",
+      "size_bytes": 156089,
+      "used_for": "Morton vs median-split comparison on 200 KITTI pairs."
+    },
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/results/frames.txt",
+      "category": "workload",
+      "relative_path": "results/frames.txt",
+      "requirement_ids": [
+        "REQ-PERF"
+      ],
+      "sha256": "06ff8d1f38107bf859bfe80fde553c8fec6eb57dac5fbef697b2d96983b8c239",
+      "size_bytes": 12156,
+      "used_for": "Fixed KITTI frame-pair list the KITTI cases are drawn from."
+    },
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/results/knn1_bucket_model.csv",
+      "category": "workload",
+      "relative_path": "results/knn1_bucket_model.csv",
+      "requirement_ids": [
+        "REQ-STATS",
+        "REQ-PERF"
+      ],
+      "sha256": "ac27c8570258946fd0f5faa987d467f9a6176a731003e92443bf5e5f1f84dd52",
+      "size_bytes": 59129,
+      "used_for": "Model work counts (buckets fetched, box checks, distance evaluations) on 200 KITTI pairs at bucket sizes 256 and 512."
+    },
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/src/bucket_compare.py",
+      "category": "reference_implementation",
+      "relative_path": "src/bucket_compare.py",
+      "requirement_ids": [
+        "REQ-PREP",
+        "REQ-BUCKET-SIZE"
+      ],
+      "sha256": "da58324872e9e1d778ebbda9f4726308376a32c24e890a61edffe29d90acb3a8",
+      "size_bytes": 6232,
+      "used_for": "Median-split ordering used by the model; Morton vs median comparison that selected median splits."
+    },
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/src/gen_knn1_vectors.py",
+      "category": "test_vector_generator",
+      "relative_path": "src/gen_knn1_vectors.py",
+      "requirement_ids": [
+        "REQ-SIZES",
+        "REQ-OUTPUT-FORMAT",
+        "REQ-TIES",
+        "REQ-EXACT"
+      ],
+      "sha256": "2b1c1b2476844ddbd4645d1779edca9a4f888fabdde82e14437748dba4ea5aba",
+      "size_bytes": 7232,
+      "used_for": "Generates the 25 correctness cases with independent cKDTree expected results."
+    },
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/src/knn1_bucket_model.py",
+      "category": "reference_implementation",
+      "relative_path": "src/knn1_bucket_model.py",
+      "requirement_ids": [
+        "REQ-PROBLEM",
+        "REQ-EXACT",
+        "REQ-PREP",
+        "REQ-BUCKET-SIZE",
+        "REQ-STATS"
+      ],
+      "sha256": "f47215ab9e1b31eae0db8e896b597c7df30998c39c6969337940dc72f1d64be6",
+      "size_bytes": 8272,
+      "used_for": "Step-by-step model of the kernel (Part A bucketing, Step 6 ranking, stop/skip rule, scan). Exact on all 200 KITTI pairs and all test cases; source of expected fetch counts."
+    },
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/src/knn_data.py",
+      "category": "reference_implementation",
+      "relative_path": "src/knn_data.py",
+      "requirement_ids": [
+        "REQ-INPUT-FORMAT",
+        "REQ-INPUT-RANGE"
+      ],
+      "sha256": "7c0dc4e3e913e0555441a80ecc903def63e1075f8e99a17ab0c79b6a48c48ed8",
+      "size_bytes": 4554,
+      "used_for": "Quantization to int16 cm with clamp +/-120 m and KITTI loading."
+    },
+    {
+      "absolute_path": "/home/sitotaem/pva-knn-study/testdata/knn1_bucket/manifest.json",
+      "category": "test_vectors",
+      "relative_path": "testdata/knn1_bucket/manifest.json",
+      "requirement_ids": [
+        "REQ-EXACT",
+        "REQ-TIES",
+        "REQ-SIZES"
+      ],
+      "sha256": "7671e080d536317e89641cd9c1afe72354dc8063d0cb47c0225833a1f0b4babb",
+      "size_bytes": 14931,
+      "used_for": "Case list with sizes, SHA-256, sum_dist2 and tie counts."
+    }
+  ],
+  "counts": {
+    "additional_evidence_files": 8,
+    "blocking_questions": 0,
+    "correctness_cases": 31,
+    "non_blocking_unresolved": 2,
+    "performance_cases": 2,
+    "requirements": 17
+  },
+  "doctor_report": {
+    "absolute_path": "/home/sitotaem/pva-work/reports/doctor-report.md",
+    "sha256": "57b6b52f590dd2b009b29337758307628707367e4077992b3c0bffdda528fd98",
+    "size_bytes": 4827
+  },
+  "evidence_manifest": {
+    "absolute_path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/configure/evidence.json",
+    "sha256": "2a194b478dc50b3e86f97d3e3c67467f38aef749c284e72d7b66ae0877d6fafa",
+    "size_bytes": 11910
+  },
+  "operator": {
+    "name": "Knn1BucketS16",
+    "task_mode": "new"
+  },
+  "result": "CONFIGURED",
+  "schema_authority": "skill_workflow",
+  "schema_version": 3,
+  "specification": {
+    "absolute_path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/configure/operator-spec.json",
+    "sha256": "947c1550699b6d9d2f83558ab6974197ad9eece8f5220f735ac402049bccd515",
+    "size_bytes": 20670
+  },
+  "stage": "spec",
+  "target": {
+    "emulator": {
+      "policy": "required"
+    },
+    "interoperability": [],
+    "operating_systems": [
+      "L4T"
+    ],
+    "pva_generations": [
+      "GEN3"
+    ],
+    "pva_sdk_version": "2.10.1",
+    "safety": {
+      "constraints": [],
+      "required": false,
+      "standard": null
+    }
+  },
+  "test_matrix": {
+    "absolute_path": "/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/configure/test-matrix.json",
+    "sha256": "1e75980db5e66cc0190bb172bf8d58d9eb52e5132a2d54776805517e2e1667e4",
+    "size_bytes": 42042
+  },
+  "workspace": {
+    "absolute_path": "/home/sitotaem/pva-knn-study"
+  }
+}

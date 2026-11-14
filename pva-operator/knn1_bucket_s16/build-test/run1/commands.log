@@ -1,0 +1,15 @@
+[2026-11-13T22:44:33Z] cmake -S /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16 -B /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/build-emu -DPVA_BUILD_MODE=EMU -DPVA_DEFAULT_GEN=GEN3 -DPVA_ONLY_BUILD_GENS=GEN3 -> 0
+[2026-11-13T22:44:34Z] cmake --build /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/build-emu -j8 -> 0
+[2026-11-13T22:44:35Z] cmake -S /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16 -B /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/build-l4t -DPVA_BUILD_MODE=L4T -DPVA_DEFAULT_GEN=GEN3 -DPVA_ONLY_BUILD_GENS=GEN3 -DPVA_DISASSEMBLE=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/stage -> 0
+[2026-11-13T22:44:38Z] cmake --build /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/build-l4t -j8 -> 0
+[2026-11-13T22:44:46Z] env PVA_GEN=GEN3 /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/build-emu/knn1_bucket_s16_test /home/sitotaem/pva-knn-study/testdata/knn1_bucket --list -> 0
+[2026-11-13T22:44:46Z] START env PVA_GEN=GEN3 /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/build-emu/knn1_bucket_s16_test /home/sitotaem/pva-knn-study/testdata/knn1_bucket (background)
+[2026-11-13T22:45:19Z] ssh probe -> 0
+[2026-11-13T22:45:26Z] cmake --install /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run1/build-l4t -> 0
+[2026-11-13T22:45:29Z] deploy to <user>@35.3.235.70:/tmp/<user>-pva-knn1-bt-run1 -> 0
+[2026-11-13T22:45:35Z] remote: cd '/tmp/<user>-pva-knn1-bt-run1' && ./bin/knn1_bucket_s16_test testdata/knn1_bucket --list -> 0
+[2026-11-13T22:45:48Z] remote: cd '/tmp/<user>-pva-knn1-bt-run1' && ./bin/knn1_bucket_s16_test testdata/knn1_bucket -> 0
+[2026-11-13T22:45:48Z] remote: cd '/tmp/<user>-pva-knn1-bt-run1' && ./bin/knn1_bucket_s16_sample -> 0
+[2026-11-13T22:46:03Z] remote: clock read (read-only) before -> 0
+[2026-11-13T22:50:55Z] remote: cd '/tmp/<user>-pva-knn1-bt-run1' && (timeout 1500 tegrastats --interval 100 --logfile perf.tegrastats.txt & TS=$!; sleep 2; rc=0; for cs in kitti_a kitti_b; do echo "== $cs"; ./bin/knn1_bucket_s16_perf testdata/knn1_bucket perf_$cs.csv --case $cs --warmup 100 --samples 1000 || rc=1; done; sleep 2; kill $TS 2>/dev/null; wait $TS 2>/dev/null; exit $rc) -> 0
+[2026-11-13T22:50:56Z] remote: clock read (read-only) after -> 0

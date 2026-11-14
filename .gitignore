@@ -1,0 +1,25 @@
+# Build output (regenerate with cmake)
+build/
+pva-operator/*/build-test/*/build-emu/
+pva-operator/*/build-test/*/build-l4t/
+pva-operator/*/build-test/*/stage/
+pva-operator/*/build-test/*/deploy.tar.gz
+
+# Machine-specific: target address and login
+pva-operator/*/build-test/*/dut.sh
+
+# KITTI subset (727 MB, from the dataset on deadshot; list in results/frames.txt)
+data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Editor and OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store

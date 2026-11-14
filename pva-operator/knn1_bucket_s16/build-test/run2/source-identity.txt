@@ -1,0 +1,4 @@
+project_root=/home/sitotaem/pva-knn-study
+git: not available (no git metadata)
+manifest_sha256=737d032297b45c802abeeb5dc11ba82523a8ff133f8920d5c434cd4b4c9ee636
+2026-11-14T05:16:10+00:00

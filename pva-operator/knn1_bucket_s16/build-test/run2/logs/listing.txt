@@ -1,0 +1,63 @@
+listing: /home/sitotaem/pva-knn-study/pva-operator/knn1_bucket_s16/build-test/run2/build-l4t/knn1_bucket_s16_dev__gen3.lst
+sha256: 9af3e950cbfd7f79b0700d14a1b685304f945d5f0e7ca48a415ffeec5f0398c0
+generation: GEN3; entry point: main (CUPVA_VPU_MAIN)
+counts: VSumSqHHW=28 VMinLTW=21 VMuxW=27 VLDH_S(agen broadcast)=13 InitAgen=13 spill-comments=0
+--- scan loop (Step 8), software-pipelined, 4 ref points per iteration:
+    1658: 90V R18, R26 || LDW *( R1 + #0x458 ), R17
+    1660: 21W *( R1 + #0x574 ), R18
+    1664: 21W *( R1 + #0x494 ), R14
+
+00001668 <.L
+    1668: 90LIADD R5, #0x8, R23, R2 || SLLIADD R5, #0x8, R24, R3
+    1670: 10LIADD R5, #0x8, R27, R4
+    1674: 90itAgen R2, A0.Base || InitAgen R3, A1.Base
+    167c: 90itAgen R4, A2.Base || ORI R0, #0x80, R2
+    1684: 90gAgen R2, A0.N1 || CfgAgen R2, A1.N1
+    168c: 90gAgen R2, A2.N1 || ORI R0, #0x2, R2
+    1694: 90gAgen R2, A0.Mod1 || CfgAgen R2, A1.Mod1
+    169c: 90gAgen R2, A2.Mod1 || VLDH_S *A0++, W0 || VLDH_S *A1++, W1
+
+000016a8 <.L
+    16a8: a9DH_S *A2++, W2 || VLDH_S *A0++, W3 || VLDH_S *A1++, W4
+    16b4: a9DH_S *A2++, W5 || VLDH_S *A0++, W6 || VLDH_S *A1++, W7
+    16c0: a9DH_S *A2++, W8 || VLDH_S *A0++, W9 || VLDH_S *A1++, W10
+    16cc: 29DH_S *A2++, W11
+    16d0: d9ubH W12, W0, V0 || VSubH W13, W1, V1
+    16d8: d9ubH W14, W2, V2 || VSumSqHHW V0, V1, W0:W1
+    16e0: daumSqHHW V2, V18, V0:V1 || VSubH W12, W3, V2
+    16e8: c0ddW W0:W1, V0:V1, V4:V5 || VSubH W13, W4, V0
+    16f0: d9ubH W14, W5, V1 || VSumSqHHW V2, V0, W0:W1
+    16f8: daumSqHHW V1, V18, V0:V1 || VSubH W14, W8, V2
+    1700: d9ubH W12, W9, V8 || VSubH W12, W6, V3
+    1708: d9ubH W13, W7, V9 || VSumSqHHW V2, V18, V10:V11
+    1710: c0ddW W0:W1, V0:V1, V6:V7 || VSumSqHHW V3, V9, W0:W1
+    1718: e0inLTW V5, V19, V0, V5 || VAddW W0:W1, V10:V11, V2:V3
+    1720: d9ubH W13, W10, V1 || VSubH W14, W11, V9
+    1728: daumSqHHW V8, V1, W0:W1 || VSumSqHHW V9, V18, V10:V11
+    1730: e0inLTW V7, V0, V8, V7 || VAddW W0:W1, V10:V11, V0:V1
+    1738: 98DI R0, #0x1, R2 || ADDI R0, #0x2, R3 || VMinLTW V4, V19, V9, V4 || VMinLTW V3, V8, V3, V11 || VLDH_S *A0++, W0 || VLDH_S *A1++, W1 || VLDH_S *A2++, W2
+    1754: 98DI R0, #0x3, R4 || VMuxW V4:V5, R0, V20:V21, V4:V5 || VMinLTW V6, V9, V8, V6 || VLDH_S *A0++, W3 || VLDH_S *A1++, W4 || VLDH_S *A2++, W5
+    176c: c6uxW V6:V7, R2, V4:V5, V4:V5 || VMinLTW V2, V8, V2, V10 || VLDH_S *A0++, W6 || VLDH_S *A1++, W7 || VLDH_S *A2++, W8
+    1780: c6uxW V10:V11, R3, V4:V5, V4:V5 || VMinLTW V0, V2, V0, V2 || VLDH_S *A0++, W9 || VLDH_S *A1++, W10 || VLDH_S *A2++, W11
+    1794: 60inLTW V1, V3, V1, V3
+    1798: 46uxW V2:V3, R4, V4:V5, V2:V3
+    179c: d9ubH W12, W0, V4 || VSubH W13, W1, V5
+    17a4: d9ubH W14, W2, V6 || VSumSqHHW V4, V5, W0:W1
+    17ac: daumSqHHW V6, V18, V4:V5 || VSubH W12, W3, V6
+    17b4: c0ddW W0:W1, V4:V5, V4:V5 || VSubH W13, W4, V7
+    17bc: d9ubH W14, W5, V8 || VSumSqHHW V6, V7, W0:W1
+    17c4: daumSqHHW V8, V18, V6:V7 || VSubH W12, W6, V8
+    17cc: c0ddW W0:W1, V6:V7, V6:V7 || VSubH W13, W7, V9
+    17d4: d9ubH W14, W8, V10 || VSumSqHHW V8, V9, W0:W1
+    17dc: 5aumSqHHW V10, V18, V8:V9
+    17e0: c0ddW W0:W1, V8:V9, V8:V9 || VSubH W12, W9, V10
+    17e8: e0inLTW V5, V1, V5, V1 || VSubH W13, W10, V11
+    17f0: d9ubH W14, W11, V12 || VSumSqHHW V10, V11, W0:W1
+    17f8: 98DI R22, #-0x2, R3 || ADDI R0, #0x4, R2 || VSumSqHHW V12, V18, V10:V11 || VMinLTW V7, V5, V7, V5
+    1808: 40ddW W0:W1, V10:V11, V10:V11
+    180c: 01T R3, #0x34 <.L0 +0x23c>
+    1810: 00P
+    1814: 00P
+    1818: 98DI R2, #0x1, R3 || ADDI R2, #0x2, R4 || VMinLTW V4, V0, V4, V0 || VMinLTW V9, V7, V7, V9 || VLDH_S *A2++, W0 || VLDH_S *A1++, W1 || VLDH_S *A0++, W2
+    1834: e0inLTW V6, V4, V6, V4 || VMuxW V0:V1, R2, V2:V3, V2:V3 || VLDH_S *A2++, W3 || VLDH_S *A1++, W4 || VLDH_S *A0++, W5
+    1848: e0inLTW V11, V7, V7, V11 || VMinLTW V8, V6, V6, V8 || VLDH_S *A2++, W6 || VLDH_S *A1++, W7 || VLDH_S *A0++, W8

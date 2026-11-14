@@ -1,0 +1,32 @@
+RESULT CORR-KITTI-A PASS nq=122987 nr=122919 teams=7687 buckets=961 fetched=22449 fetched_per_team=2.92039 sum_dist2=51148720
+RESULT CORR-KITTI-B PASS nq=122563 nr=122753 teams=7661 buckets=960 fetched=25158 fetched_per_team=3.28391 sum_dist2=302125029
+RESULT CORR-KITTI-C PASS nq=123714 nr=123867 teams=7733 buckets=968 fetched=22906 fetched_per_team=2.96211 sum_dist2=267022911
+RESULT CORR-KITTI-D PASS nq=123298 nr=123431 teams=7707 buckets=965 fetched=21904 fetched_per_team=2.84209 sum_dist2=263371403
+RESULT CORR-KITTI-A-SWAP PASS nq=122919 nr=122987 teams=7683 buckets=961 fetched=22820 fetched_per_team=2.97019 sum_dist2=51025322
+RESULT CORR-KITTI-16K PASS nq=16384 nr=16384 teams=1024 buckets=128 fetched=2302 fetched_per_team=2.24805 sum_dist2=32839805
+RESULT CORR-KITTI-UNEQUAL PASS nq=4096 nr=122919 teams=256 buckets=961 fetched=1332 fetched_per_team=5.20312 sum_dist2=4676428
+RESULT CORR-KITTI-SELF PASS nq=16384 nr=16384 teams=1024 buckets=128 fetched=1821 fetched_per_team=1.77832 sum_dist2=0
+RESULT CORR-MAX-131072 PASS nq=131072 nr=131072 teams=8192 buckets=1024 fetched=38448 fetched_per_team=4.69336 sum_dist2=10335670310
+RESULT CORR-SMALL-1X1 PASS nq=1 nr=1 teams=1 buckets=1 fetched=1 fetched_per_team=1 sum_dist2=9154422
+RESULT CORR-SMALL-1X512 PASS nq=1 nr=512 teams=1 buckets=4 fetched=2 fetched_per_team=2 sum_dist2=204627
+RESULT CORR-SMALL-16X1 PASS nq=16 nr=1 teams=1 buckets=1 fetched=1 fetched_per_team=1 sum_dist2=316980738
+RESULT CORR-SMALL-15X511 PASS nq=15 nr=511 teams=1 buckets=4 fetched=4 fetched_per_team=4 sum_dist2=3354203
+RESULT CORR-SMALL-16X512 PASS nq=16 nr=512 teams=1 buckets=4 fetched=4 fetched_per_team=4 sum_dist2=3271854
+RESULT CORR-SMALL-17X513 PASS nq=17 nr=513 teams=2 buckets=5 fetched=5 fetched_per_team=2.5 sum_dist2=3409418
+RESULT CORR-SMALL-513X17 PASS nq=513 nr=17 teams=33 buckets=1 fetched=33 fetched_per_team=1 sum_dist2=957540993
+RESULT CORR-SMALL-1000X3000 PASS nq=1000 nr=3000 teams=63 buckets=24 fetched=263 fetched_per_team=4.1746 sum_dist2=65423830
+RESULT CORR-EXTREMES PASS nq=32 nr=5 teams=2 buckets=1 fetched=2 fetched_per_team=1 sum_dist2=27648000000
+RESULT CORR-DUPLICATES-GRID PASS nq=4000 nr=6000 teams=250 buckets=47 fetched=553 fetched_per_team=2.212 sum_dist2=0
+RESULT CORR-ALL-REFS-IDENTICAL PASS nq=1000 nr=2000 teams=63 buckets=16 fetched=63 fetched_per_team=1 sum_dist2=145822220189
+RESULT CORR-DEGENERATE-LINE PASS nq=1000 nr=3000 teams=63 buckets=24 fetched=89 fetched_per_team=1.4127 sum_dist2=30705
+RESULT CORR-DEGENERATE-PLANE PASS nq=2000 nr=5000 teams=125 buckets=40 fetched=282 fetched_per_team=2.256 sum_dist2=74707564
+RESULT CORR-FAR-CLUSTERS PASS nq=1200 nr=6000 teams=75 buckets=47 fetched=427 fetched_per_team=5.69333 sum_dist2=55061939485
+RESULT CORR-REPEATED-SUBMISSION PASS 100 submissions identical and correct
+RESULT CORR-REPREPARE-SIZES PASS 5-step sequence correct
+RESULT CORR-ASYNC-FENCE PASS no sentinel left, case correct
+RESULT CORR-SUMDIST2-INT64 PASS 3 sums > 2^31 exact
+RESULT CORR-STATS-VS-MODEL PASS kitti_a:fetched=22449,teams=7687 kitti_b:fetched=25158,teams=7661 kitti_c:fetched=22906,teams=7733 kitti_d:fetched=21904,teams=7707 
+RESULT ERR-ORDER PASS all out-of-order calls rejected
+RESULT ERR-ARGS PASS bad arguments rejected, later valid run correct
+RESULT CORR-NO-ALIAS PASS disjoint buffers, inputs unchanged
+SUMMARY pass=31 fail=0

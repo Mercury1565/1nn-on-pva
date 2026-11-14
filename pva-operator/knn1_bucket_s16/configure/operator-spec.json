@@ -1,0 +1,470 @@
+{
+ "schema_version": 2,
+ "schema_authority": "skill_workflow",
+ "status": "CONFIGURED",
+ "operator": {
+  "name": "Knn1BucketS16",
+  "purpose": "Exact 1-nearest-neighbour squared distances from every point of one int16 point cloud (up to 131072 points) to another, using median-split buckets (128 points by default) so most reference points are never fetched or compared, on the Thor PVA, for the Mnemosyne PVA feasibility study (cloud-to-cloud distance).",
+  "task_mode": "new",
+  "public_api": {
+   "language": [
+    "C++"
+   ],
+   "headers": [
+    "knn1_bucket_s16.hpp"
+   ],
+   "symbols": [
+    "pva_knn::Knn1BucketS16",
+    "pva_knn::Knn1Stats",
+    "pva_knn::Knn1BucketS16::kMaxPoints",
+    "pva_knn::Knn1BucketS16::kBucketSize",
+    "pva_knn::Knn1BucketS16::kTeamSize",
+    "pva_knn::Knn1BucketS16::init",
+    "pva_knn::Knn1BucketS16::prepare",
+    "pva_knn::Knn1BucketS16::submit",
+    "pva_knn::Knn1BucketS16::results",
+    "pva_knn::Knn1BucketS16::stats",
+    "pva_knn::Knn1BucketS16::program",
+    "pva_knn::Knn1BucketS16::lastStatus",
+    "pva_knn::Knn1BucketS16::sumDist2"
+   ]
+  }
+ },
+ "platform": {
+  "pva_sdk_version": "2.10.1",
+  "pva_generations": [
+   "GEN3"
+  ],
+  "operating_systems": [
+   "L4T"
+  ],
+  "emulator": {
+   "policy": "required"
+  },
+  "safety": {
+   "required": false,
+   "standard": null,
+   "constraints": []
+  },
+  "interoperability": []
+ },
+ "requirements": [
+  {
+   "id": "REQ-PROBLEM",
+   "authority": "user_input",
+   "behavior": "Exact one-directional 1-nearest-neighbour search between two point clouds: for every query point p in P1 (queries), report the smallest squared Euclidean distance to any point of P2 (refs) and the index of one P2 point at that distance. A cloud-to-cloud distance is derived on the host as sqrt(sum over P1 of d2). The symmetric (Chamfer) form is two calls with P1 and P2 swapped."
+  },
+  {
+   "id": "REQ-EXACT",
+   "authority": "user_input",
+   "behavior": "Results are exact: dist2[i] equals min over all refs j of d2(q_i, r_j). The search may skip references only when it is proven they cannot be nearer (box lower bound >= the current best); no approximation, sampling or early termination that can change any dist2."
+  },
+  {
+   "id": "REQ-SIZES",
+   "authority": "user_input",
+   "behavior": "Point counts are runtime values: 1 <= n_query <= 131072 and 1 <= n_ref <= 131072, independently (n_query != n_ref allowed). 131072 = 1024 buckets x 128 refs (default build) and 8192 teams x 16 queries; it covers a full KITTI HDL-64 frame (~115k-128k points)."
+  },
+  {
+   "id": "REQ-INPUT-FORMAT",
+   "authority": "user_input",
+   "behavior": "Inputs are host-memory arrays of int16 centimetre coordinates in planar layout: queries int16[3][n_query] (x plane, y plane, z plane, each contiguous, tight pitch) and refs int16[3][n_ref] likewise. Produced by clamping float metres to [-120 m, +120 m] and rounding half-to-even to cm (src/knn_data.py quantize_cm). The operator copies them; it never modifies them."
+  },
+  {
+   "id": "REQ-INPUT-RANGE",
+   "authority": "user_input",
+   "behavior": "Precondition: every coordinate is in [-12000, 12000]. Then every d2 <= 3*24000^2 = 1728000000 < 2^31-1 and is exact in int32. Out-of-range input is unspecified and not checked by the operator."
+  },
+  {
+   "id": "REQ-DIST",
+   "authority": "user_input",
+   "behavior": "d2(q, r) = (qx-rx)^2 + (qy-ry)^2 + (qz-rz)^2 computed in integer arithmetic with no rounding, saturation or overflow for in-range inputs. No floating point in distance computation or comparison."
+  },
+  {
+   "id": "REQ-OUTPUT-FORMAT",
+   "authority": "user_input",
+   "behavior": "Outputs are host-memory arrays in the ORIGINAL query order: dist2 int32[n_query] (cm^2) and idx int32[n_query] with idx[i] in [0, n_ref) indexing the caller's refs array in its original order, and d2(q_i, r_idx[i]) == dist2[i]."
+  },
+  {
+   "id": "REQ-TIES",
+   "authority": "user_input",
+   "behavior": "When several refs share the minimum d2, any of them is a correct idx. Check: dist2 bit-exact against the independent expected file; idx in range and its recomputed d2 equals dist2. Matching the expected idx file is not required."
+  },
+  {
+   "id": "REQ-PREP",
+   "authority": "user_input",
+   "behavior": "Bucket preparation (Part A) runs on the host CPU inside the operator's prepare() call: split refs into buckets of kBucketSize by recursive median split of the widest axis, store them bucket by bucket with a per-bucket bounding box, and group queries into teams of 16 the same way. Padding of a partial bucket or team must not change any result (e.g. copies of a real point). prepare() time is part of the operator's cost and is measured and reported separately from PVA time. prepare() may use several CPU threads when the caller asks for it (init cpu_threads, default 1); the results do not depend on the thread count."
+  },
+  {
+   "id": "REQ-BUCKET-SIZE",
+   "authority": "user_input",
+   "behavior": "Bucket size and team size 16 queries are compile-time constants (kBucketSize, kTeamSize). kBucketSize is 128 by default (CMake option K1_BUCKET: 128, 256 or 512); 128 was fastest on loki with the optimized kernel (user request 2026-11-14: optimize as much as possible)."
+  },
+  {
+   "id": "REQ-API",
+   "authority": "skill_workflow",
+   "behavior": "C++ API in knn1_bucket_s16.hpp, namespace pva_knn, class Knn1BucketS16: static constexpr int32_t kMaxPoints=131072, kBucketSize=K1_BUCKET (default 128), kTeamSize=16, kMaxCpuThreads=16; int32_t init(int32_t vpus = 2, int32_t cpu_threads = 1) (allocate internal cuPVA buffers for the maximum size, create one program per VPU once; vpus in [1, 2], cpu_threads in [1, kMaxCpuThreads]); int32_t prepare(const int16_t* queries, int32_t n_query, const int16_t* refs, int32_t n_ref) (Part A, host pointers); int32_t submit(cupva::Stream&, cupva::Fence&) (asynchronous); int32_t results(int32_t* dist2, int32_t* idx) (host pointers, after the fence; restores original query order); int32_t stats(Knn1Stats*) (see REQ-STATS); int32_t vpus() const; cupva::Error lastStatus() const; static int64_t sumDist2(const int32_t* dist2, int32_t n). All int32_t calls return 0 on success and nonzero on error and never throw."
+  },
+  {
+   "id": "REQ-STATS",
+   "authority": "user_input",
+   "behavior": "After a completed submission, stats() reports n_query, n_ref, n_buckets, n_teams and the total number of buckets fetched (scanned) by the PVA over all teams, as counted by the kernel itself, and the number of buckets copied from DRAM into the VPUs' bucket caches (dma_fetches). Used to relate PVA time to work and to compare with the Python model (src/knn1_bucket_model.py); it is diagnostic, not part of correctness, except the sanity bound n_teams <= fetched <= n_teams * n_buckets."
+  },
+  {
+   "id": "REQ-ERRORS",
+   "authority": "skill_workflow",
+   "behavior": "Nonzero return, without submitting work and without modifying caller output buffers: prepare() before a successful init(); null pointer or n_query/n_ref outside [1, 131072] in prepare(); submit() before a successful prepare(); results()/stats() before a successful submit(); null pointer in results()/stats(); any cuPVA error (exceptions caught)."
+  },
+  {
+   "id": "REQ-ALIASING",
+   "authority": "user_input",
+   "behavior": "Caller buffers are host memory and are only read (inputs) or written (outputs) by prepare()/results(); dist2 and idx must not overlap each other or the inputs. Internal device buffers are owned by the operator."
+  },
+  {
+   "id": "REQ-REPEAT",
+   "authority": "user_input",
+   "behavior": "The prepared data can be submitted repeatedly (>= 1000 times) with bit-identical dist2 each time. prepare() can be called again with different sizes between submissions (e.g. large, small, large); each submission's results reflect only the most recent prepare() with no stale data from earlier, larger inputs. One outstanding submission per instance."
+  },
+  {
+   "id": "REQ-GEN3",
+   "authority": "user_input",
+   "behavior": "Target PVA GEN3 only (Jetson AGX Thor, L4T R38.4, cuPVA 2.10.1): -DPVA_DEFAULT_GEN=GEN3 -DPVA_ONLY_BUILD_GENS=GEN3, NVVPU compiler, EMU with PVA_GEN=GEN3. Both VPS of the PVA by default (teams split in two contiguous halves); vpus = 1 uses one."
+  },
+  {
+   "id": "REQ-PERF",
+   "authority": "user_input",
+   "behavior": "Characterise on loki, per KITTI workload: prepare() host time, PVA task time including all DMA (profiler TOTAL_TIME) and VPU execution time, results() host time, and end-to-end time; p50 and p99 over >= 1000 samples after a separate warm-up; buckets fetched per call; clock_mode=MAXN-dvfs (clocks not pinned; nvpmodel -q and jetson_clocks --show recorded; tegrastats running). EMU and build-host timings are never PVA performance. No acceptance threshold."
+  }
+ ],
+ "resources": {
+  "inputs": [
+   {
+    "name": "queries",
+    "type": "int16",
+    "shape": [
+     3,
+     "n_query"
+    ],
+    "layout": "planar x,y,z; tight pitch",
+    "memory": "host memory (copied by prepare)",
+    "range": [
+     -12000,
+     12000
+    ],
+    "units": "cm"
+   },
+   {
+    "name": "refs",
+    "type": "int16",
+    "shape": [
+     3,
+     "n_ref"
+    ],
+    "layout": "planar x,y,z; tight pitch",
+    "memory": "host memory (copied by prepare)",
+    "range": [
+     -12000,
+     12000
+    ],
+    "units": "cm"
+   }
+  ],
+  "outputs": [
+   {
+    "name": "dist2",
+    "type": "int32",
+    "shape": [
+     "n_query"
+    ],
+    "layout": "original query order",
+    "memory": "host memory (written by results)",
+    "range": [
+     0,
+     1728000000
+    ],
+    "units": "cm^2"
+   },
+   {
+    "name": "idx",
+    "type": "int32",
+    "shape": [
+     "n_query"
+    ],
+    "layout": "original query order",
+    "memory": "host memory (written by results)",
+    "range": [
+     0,
+     "n_ref-1"
+    ]
+   },
+   {
+    "name": "stats",
+    "type": "Knn1Stats",
+    "shape": [
+     1
+    ],
+    "layout": "struct {int32 n_query, n_ref, n_buckets, n_teams; int64 buckets_fetched}",
+    "memory": "host memory (written by stats)",
+    "range": null
+   }
+  ]
+ },
+ "parameters": [
+  {
+   "name": "n_query",
+   "value": "1..131072",
+   "kind": "runtime"
+  },
+  {
+   "name": "n_ref",
+   "value": "1..131072",
+   "kind": "runtime"
+  },
+  {
+   "name": "kMaxPoints",
+   "value": 131072,
+   "kind": "compile_time_constant"
+  },
+  {
+   "name": "kBucketSize",
+   "value": 128,
+   "kind": "compile_time_constant"
+  },
+  {
+   "name": "kTeamSize",
+   "value": 16,
+   "kind": "compile_time_constant"
+  }
+ ],
+ "behavior": {
+  "border": {
+   "modes": [],
+   "constant_value": null,
+   "halo": null
+  },
+  "arithmetic": {
+   "rounding": "none: exact integer arithmetic",
+   "saturation": "none for in-range inputs (max d2 1728000000)",
+   "overflow": "impossible for in-range inputs; sumDist2 accumulates in int64",
+   "nan": "not applicable (integer inputs)",
+   "infinity": "not applicable (integer inputs)"
+  },
+  "aliasing": {
+   "in_place": false,
+   "permitted_pairs": [],
+   "prohibited_pairs": [
+    [
+     "dist2",
+     "idx"
+    ],
+    [
+     "dist2",
+     "queries"
+    ],
+    [
+     "dist2",
+     "refs"
+    ],
+    [
+     "idx",
+     "queries"
+    ],
+    [
+     "idx",
+     "refs"
+    ]
+   ]
+  },
+  "execution": {
+   "asynchronous": true,
+   "stream_rules": "submit() enqueues on the given stream; one outstanding submission per instance; prepare() must not be called while a submission is outstanding.",
+   "fence_rules": "results() and stats() are valid only after the fence passed to submit() expires.",
+   "repeated_submission": "Supported; bit-identical dist2; re-prepare with any valid sizes between submissions."
+  },
+  "errors": [
+   {
+    "condition": "prepare before init; null pointer; n_query or n_ref outside [1, 131072]",
+    "result": "nonzero; nothing submitted; caller buffers untouched"
+   },
+   {
+    "condition": "submit before a successful prepare",
+    "result": "nonzero"
+   },
+   {
+    "condition": "results or stats before a successful submit, or null pointer",
+    "result": "nonzero; caller buffers untouched"
+   },
+   {
+    "condition": "cuPVA error",
+    "result": "nonzero; exception not propagated"
+   }
+  ]
+ },
+ "design_constraints": [
+  {
+   "id": "DC-VMEM",
+   "kind": "platform",
+   "constraint": "Each Thor VPS has 512 KB VMEM (4 superbanks x 128 KB). P2 at the maximum size (131072 x 3 x int16 = 768 KiB) does NOT fit, so refs must be brought in piecewise (buckets of 128 x 3 x int16 = 768 B; a cache of 480 buckets fits in superbanks B-D). The box table (1024 x 6 x int16 = 12 KiB) fits.",
+   "evidence": {
+    "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+    "local_markdown": "/home/sitotaem/pva-work/references/sdk/guides/thor/05-vector-memory-vmem.md",
+    "packaged_source": "_downloads/4b0cb81071f7879ee61d3dd450fb77f1/Thor_PVA_VPU_Programmers_Guide.pdf",
+    "source_sha256": "6e754ea330087504fc0ddeac6ee8600a3c06e9ca045662221d3b505aa787e02f",
+    "version": "2.10.1",
+    "section": "Ch. 5 VMEM, PDF p. 29"
+   }
+  },
+  {
+   "id": "DC-GSDF",
+   "kind": "platform",
+   "constraint": "GatherScatterDataFlow moves tiles whose DRAM locations are decided at run time on the VPU (cupvaGSDFOpen / cupvaGSDFUpdateTiles(x, y, n) / cupvaGSDFTrig / cupvaGSDFSync / cupvaGSDFClose). Direction (read to VMEM or write from VMEM) is fixed on the host; the host tile() size sets bandwidth allocation; the source surface must hold at least one tile. At most GSDF_MAX_NUM_TILES = 32 tiles per trigger.",
+   "evidence": {
+    "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+    "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/pva_sdk_apis/classcupva_1_1GatherScatterDataFlow.md",
+    "packaged_source": "pva_sdk_apis/classcupva_1_1GatherScatterDataFlow.html",
+    "source_sha256": "ea7644a25f1ef91f636fda851d311caa3adadd0c4150f3d50d4a9cf1de557bfd",
+    "version": "2.10.1",
+    "section": "GatherScatterDataFlow::src(), tile(), numTilesPerTrigger(); also tutorial/roi-align-host.md device and host code; cupva_types.h line 94 GSDF_MAX_NUM_TILES"
+   }
+  },
+  {
+   "id": "DC-SCALARS",
+   "kind": "platform",
+   "constraint": "The host passes runtime values (e.g. tile counts) to the VPU by writing VMEM scalars through the CmdProgram (prog[\"name\"] = value / .set()). A CmdProgram can be reconfigured and submitted again; CmdProgram::updateDataFlows() updates dataflows of an existing program.",
+   "evidence": {
+    "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+    "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/tutorial/vmem-scalars.md",
+    "packaged_source": "tutorial/vmem-scalars.html",
+    "source_sha256": "e19020fd6f371fca500f7cdaa818720e0b014c8e26173d81c3018d85f6a370d9",
+    "version": "2.10.1",
+    "section": "vmem-scalars tutorial (reuse and resubmission of CmdProgram); rdf-halo/rdf-tiles tutorials prog[\"tileCount\"]; CmdProgram::updateDataFlows"
+   }
+  },
+  {
+   "id": "DC-LANES",
+   "kind": "platform",
+   "constraint": "384-bit vector registers: 16 x 24-bit or 8 x 48-bit lanes (dvintx gives 16 x 48-bit). Coordinate differences fit 24-bit lanes; squares and their sum (<= 1.728e9) need wider lanes (48-bit accumulation), never 24-bit.",
+   "evidence": {
+    "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+    "local_markdown": "/home/sitotaem/pva-work/references/sdk/guides/thor/06-instruction-set-architecture.md",
+    "packaged_source": "_downloads/4b0cb81071f7879ee61d3dd450fb77f1/Thor_PVA_VPU_Programmers_Guide.pdf",
+    "source_sha256": "6e754ea330087504fc0ddeac6ee8600a3c06e9ca045662221d3b505aa787e02f",
+    "version": "2.10.1",
+    "section": "6.2.3.1 Extended Precision (PDF p. 47), 6.2.3.5 (PDF p. 50)"
+   }
+  },
+  {
+   "id": "DC-COMPARE",
+   "kind": "platform",
+   "constraint": "1-cycle vector compare and min/max instructions; sum-of-squares MAC instructions; up to 2 vector operations per clock.",
+   "evidence": {
+    "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+    "local_markdown": "/home/sitotaem/pva-work/references/sdk/guides/thor/06-instruction-set-architecture.md",
+    "packaged_source": "_downloads/4b0cb81071f7879ee61d3dd450fb77f1/Thor_PVA_VPU_Programmers_Guide.pdf",
+    "source_sha256": "6e754ea330087504fc0ddeac6ee8600a3c06e9ca045662221d3b505aa787e02f",
+    "version": "2.10.1",
+    "section": "6.2.3, PDF p. 46-47"
+   }
+  },
+  {
+   "id": "DC-TSC",
+   "kind": "measurement",
+   "constraint": "The VPU TSC stops while the VPU waits for DMA, so time including DMA must come from cupva_utils::ProfilingContext (TOTAL_TIME) or host submit-to-fence timing.",
+   "evidence": {
+    "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+    "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/tutorial/profiling-tools.md",
+    "packaged_source": "tutorial/profiling-tools.html",
+    "source_sha256": "af8c2a35f55d71034a1ebc4fc86704075a7c6edee763adc8370909c59f5cf93c",
+    "version": "2.10.1",
+    "section": "Timestamp Counter (TSC) note; Profiling Stream"
+   }
+  },
+  {
+   "id": "DC-DMA",
+   "kind": "platform",
+   "constraint": "Two VPS each with a DMA engine and shared L2 SRAM; data movement through cuPVA DataFlows (RasterDataFlow, SequenceDataFlow, GatherScatterDataFlow).",
+   "evidence": {
+    "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+    "local_markdown": "/home/sitotaem/pva-work/references/sdk/guides/thor/02-architecture-overview.md",
+    "packaged_source": "_downloads/4b0cb81071f7879ee61d3dd450fb77f1/Thor_PVA_VPU_Programmers_Guide.pdf",
+    "source_sha256": "6e754ea330087504fc0ddeac6ee8600a3c06e9ca045662221d3b505aa787e02f",
+    "version": "2.10.1",
+    "section": "Ch. 2.1-2.2, PDF p. 12-13"
+   }
+  },
+  {
+   "id": "DC-CANDIDATE-LAYOUT",
+   "kind": "candidate",
+   "constraint": "Candidate: refs stored bucket-major as a 2-D surface, one row per bucket = [x0..x511 | y0..y511 | z0..z511] (1536 int16), fetched as one GSDF tile per bucket at (0, b); box table and team list as small arrays; host pads to the maximum dimensions so dataflows compile once, with the actual counts passed as VMEM scalars.",
+   "evidence": null
+  },
+  {
+   "id": "DC-CANDIDATE-RANK",
+   "kind": "candidate",
+   "constraint": "Candidate for Step 6: instead of sorting all buckets per team, repeatedly pick the nearest not-yet-visited bucket by the team's lower bound (min over the 16 lanes), stopping when that bound >= the largest lane best; teams visit ~1.5-3 buckets on KITTI (results/knn1_bucket_model.csv). Must produce exact results (REQ-EXACT).",
+   "evidence": null
+  },
+  {
+   "id": "DC-CANDIDATE-OVERLAP",
+   "kind": "candidate",
+   "constraint": "Candidate: double-buffer bucket fetches (fetch the next candidate while scanning the current), and batch query teams and outputs with RasterDataFlow or SequenceDataFlow. A first version without overlap is acceptable.",
+   "evidence": null
+  },
+  {
+   "id": "DC-CANDIDATE-VPS",
+   "kind": "candidate",
+   "constraint": "Candidate (implemented 2026-11-14): split teams across both VPS.",
+   "evidence": null
+  }
+ ],
+ "correctness_contracts": [
+  {
+   "requirement_ids": [
+    "REQ-PROBLEM",
+    "REQ-EXACT",
+    "REQ-SIZES",
+    "REQ-INPUT-FORMAT",
+    "REQ-INPUT-RANGE",
+    "REQ-DIST",
+    "REQ-OUTPUT-FORMAT",
+    "REQ-TIES",
+    "REQ-PREP"
+   ],
+   "reference": "Independent exact 1-NN from scipy cKDTree on the quantized int16 coordinates, d2 recomputed in int64 (src/gen_knn1_vectors.py -> testdata/knn1_bucket). Cross-checked offline: the step-by-step bucket model src/knn1_bucket_model.py reproduces every case exactly at bucket sizes 512 and 256 (and is bucket-size generic).",
+   "rule": "dist2 equal to expected bit-exactly for every query (tolerance 0); every idx in [0, n_ref) and host-recomputed d2(q_i, r_idx[i]) == dist2[i]; sumDist2(dist2) equals the manifest sum_dist2."
+  },
+  {
+   "requirement_ids": [
+    "REQ-API",
+    "REQ-ERRORS",
+    "REQ-ALIASING",
+    "REQ-REPEAT",
+    "REQ-STATS"
+   ],
+   "reference": "API behaviour from this spec.",
+   "rule": "Return codes as specified; caller buffers untouched on error; repeated and re-prepared submissions correct; stats within sanity bounds."
+  }
+ ],
+ "performance_contract": {
+  "acceptance": "not_set",
+  "target_source": null,
+  "sol_model": {
+   "required": false,
+   "assumptions": [],
+   "limiting_resource": null,
+   "predicted_time_or_cycles": null,
+   "acceptance_rule": null
+  }
+ },
+ "unresolved_requirements": [
+  {
+   "id": "UNRES-PREP-ON-PVA",
+   "blocking": false,
+   "question": "Whether bucket preparation should later move from the CPU to the PVA, if prepare() time turns out to dominate."
+  },
+  {
+   "id": "UNRES-REUSE",
+   "blocking": false,
+   "question": "Whether to reuse frame t's query bucketing as frame t+1's ref bucketing (needs teams to subdivide buckets; method change, model first)."
+  }
+ ]
+}

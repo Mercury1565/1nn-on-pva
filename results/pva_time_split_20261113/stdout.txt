@@ -1,0 +1,168 @@
+== round 1 case kitti_a build normal
+case=kitti_a n_query=122987 n_ref=122919 buckets_fetched=12905 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=105111313
+median startup              0 cycles
+median rank                 0 cycles
+median pick                 0 cycles
+median skiptest             0 cycles
+median fetch                0 cycles
+median scan                 0 cycles
+median merge                0 cycles
+median result               0 cycles
+median chunk_in             0 cycles
+median chunk_out            0 cycles
+median total                0 cycles
+== round 1 case kitti_a build wfe
+case=kitti_a n_query=122987 n_ref=122919 buckets_fetched=12905 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=106034686
+median startup           5169 cycles
+median rank          33361580 cycles
+median pick           3726639 cycles
+median skiptest        633304 cycles
+median fetch          5510435 cycles
+median scan          66370415 cycles
+median merge          5149245 cycles
+median result         1153050 cycles
+median chunk_in        107004 cycles
+median chunk_out        98810 cycles
+median total        117576610 cycles
+== round 1 case kitti_a build poll
+case=kitti_a n_query=122987 n_ref=122919 buckets_fetched=12905 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=106213017
+median startup           5182 cycles
+median rank          33361580 cycles
+median pick           3726639 cycles
+median skiptest        633304 cycles
+median fetch         16540319 cycles
+median scan          66370415 cycles
+median merge          5187930 cycles
+median result         1153050 cycles
+median chunk_in        310866 cycles
+median chunk_out       283432 cycles
+median total        129040738 cycles
+== round 1 case kitti_b build normal
+case=kitti_b n_query=122563 n_ref=122753 buckets_fetched=14222 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=110085483
+median startup              0 cycles
+median rank                 0 cycles
+median pick                 0 cycles
+median skiptest             0 cycles
+median fetch                0 cycles
+median scan                 0 cycles
+median merge                0 cycles
+median result               0 cycles
+median chunk_in             0 cycles
+median chunk_out            0 cycles
+median total                0 cycles
+== round 1 case kitti_b build wfe
+case=kitti_b n_query=122563 n_ref=122753 buckets_fetched=14222 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=111019758
+median startup           5270 cycles
+median rank          30460136 cycles
+median pick           3632672 cycles
+median skiptest        695353 cycles
+median fetch          6072794 cycles
+median scan          73143746 cycles
+median merge          5597643 cycles
+median result         1149150 cycles
+median chunk_in        106560 cycles
+median chunk_out        98400 cycles
+median total        122520770 cycles
+== round 1 case kitti_b build poll
+case=kitti_b n_query=122563 n_ref=122753 buckets_fetched=14222 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=111223705
+median startup           5159 cycles
+median rank          30460136 cycles
+median pick           3632672 cycles
+median skiptest        695353 cycles
+median fetch         18229610 cycles
+median scan          73143746 cycles
+median merge          5655696 cycles
+median result         1149150 cycles
+median chunk_in        309192 cycles
+median chunk_out       281892 cycles
+median total        135128693 cycles
+== round 2 case kitti_a build normal
+case=kitti_a n_query=122987 n_ref=122919 buckets_fetched=12905 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=105112008
+median startup              0 cycles
+median rank                 0 cycles
+median pick                 0 cycles
+median skiptest             0 cycles
+median fetch                0 cycles
+median scan                 0 cycles
+median merge                0 cycles
+median result               0 cycles
+median chunk_in             0 cycles
+median chunk_out            0 cycles
+median total                0 cycles
+== round 2 case kitti_a build wfe
+case=kitti_a n_query=122987 n_ref=122919 buckets_fetched=12905 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=106035212
+median startup           5233 cycles
+median rank          33361580 cycles
+median pick           3726639 cycles
+median skiptest        633304 cycles
+median fetch          5510435 cycles
+median scan          66370415 cycles
+median merge          5149245 cycles
+median result         1153050 cycles
+median chunk_in        107004 cycles
+median chunk_out        98810 cycles
+median total        117576610 cycles
+== round 2 case kitti_a build poll
+case=kitti_a n_query=122987 n_ref=122919 buckets_fetched=12905 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=106204614
+median startup           5149 cycles
+median rank          33361580 cycles
+median pick           3726639 cycles
+median skiptest        633304 cycles
+median fetch         16528943 cycles
+median scan          66370415 cycles
+median merge          5187930 cycles
+median result         1153050 cycles
+median chunk_in        310554 cycles
+median chunk_out       283360 cycles
+median total        129030682 cycles
+== round 2 case kitti_b build normal
+case=kitti_b n_query=122563 n_ref=122753 buckets_fetched=14222 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=110092257
+median startup              0 cycles
+median rank                 0 cycles
+median pick                 0 cycles
+median skiptest             0 cycles
+median fetch                0 cycles
+median scan                 0 cycles
+median merge                0 cycles
+median result               0 cycles
+median chunk_in             0 cycles
+median chunk_out            0 cycles
+median total                0 cycles
+== round 2 case kitti_b build wfe
+case=kitti_b n_query=122563 n_ref=122753 buckets_fetched=14222 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=111019174
+median startup           5236 cycles
+median rank          30460136 cycles
+median pick           3632672 cycles
+median skiptest        695353 cycles
+median fetch          6072794 cycles
+median scan          73143746 cycles
+median merge          5597643 cycles
+median result         1149150 cycles
+median chunk_in        106560 cycles
+median chunk_out        98400 cycles
+median total        122520770 cycles
+== round 2 case kitti_b build poll
+case=kitti_b n_query=122563 n_ref=122753 buckets_fetched=14222 samples=100 profiler_samples=100 sum_d2_wrong_runs=0
+median exec_ns=111224952
+median startup           5292 cycles
+median rank          30460136 cycles
+median pick           3632672 cycles
+median skiptest        695353 cycles
+median fetch         18231482 cycles
+median scan          73143746 cycles
+median merge          5655696 cycles
+median result         1149150 cycles
+median chunk_in        309432 cycles
+median chunk_out       281388 cycles
+median total        135130241 cycles

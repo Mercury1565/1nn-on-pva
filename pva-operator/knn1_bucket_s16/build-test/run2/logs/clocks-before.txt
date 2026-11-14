@@ -1,0 +1,32 @@
+2026-11-14T00:17:14-05:00
+clock_mode=MAXN-dvfs (not pinned; shared machine)
+$ nvpmodel -q
+NV Power Mode: MAXN
+0
+$ jetson_clocks --show
+SOC family:tegra264  Machine:NVIDIA Jetson AGX Thor Developer Kit
+Error: Run this script(/usr/bin/jetson_clocks) as a root user
+/sys/class/devfreq/8188050000.vic gov=tegra_wmark cur=1107000000 min=54000000 max=1107000000
+/sys/class/devfreq/bwmgr gov=bpmp-bwmgr cur=4266000000 min=4266000000 max=4266000000
+/sys/class/devfreq/gpu-gpc-0 gov=nvhost_podgov cur=1575000000 min=1575000000 max=1575000000
+/sys/class/devfreq/gpu-nvd-0 gov=nvhost_podgov cur=1692000000 min=1692000000 max=1692000000
+/sys/devices/system/cpu/cpufreq/policy0 schedutil cur=2601000 min=2601000 max=2601000
+/sys/devices/system/cpu/cpufreq/policy10 schedutil cur=2601000 min=2601000 max=2601000
+/sys/devices/system/cpu/cpufreq/policy12 schedutil cur=2601000 min=2601000 max=2601000
+/sys/devices/system/cpu/cpufreq/policy2 schedutil cur=2601000 min=2601000 max=2601000
+/sys/devices/system/cpu/cpufreq/policy4 schedutil cur=2601000 min=2601000 max=2601000
+/sys/devices/system/cpu/cpufreq/policy6 schedutil cur=2601000 min=2601000 max=2601000
+/sys/devices/system/cpu/cpufreq/policy8 schedutil cur=2601000 min=2601000 max=2601000
+PVA clock: not readable without root
+ 00:17:14 up 39 days,  3:00, 12 users,  load average: 1.31, 1.23, 1.19
+--- top cpu
+    PID USER     %CPU COMMAND
+3038155 root     53.8 kworker/u28:0-ext4-rsv-conversion
+3077770 root     41.2 kworker/u28:1+devfreq_wq
+1693116 root      2.8 sshd
+   3700 root      1.6 disp_eng_share_thread
+   2029 root      0.8 nv_queue
+1675861 <user>    0.1 MainThread
+    106 root      0.1 kcompactd0
+--- gpu procs
+pid, process_name, used_gpu_memory [MiB]

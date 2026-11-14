@@ -1,0 +1,337 @@
+{
+ "schema_version": 2,
+ "schema_authority": "skill_workflow",
+ "additional_evidence_used": [
+  {
+   "category": "reference_implementation",
+   "relative_path": "src/knn1_bucket_model.py",
+   "requirement_ids": [
+    "REQ-PROBLEM",
+    "REQ-EXACT",
+    "REQ-PREP",
+    "REQ-BUCKET-SIZE",
+    "REQ-STATS"
+   ],
+   "used_for": "Step-by-step model of the kernel (Part A bucketing, Step 6 ranking, stop/skip rule, scan). Exact on all 200 KITTI pairs and all test cases; source of expected fetch counts."
+  },
+  {
+   "category": "reference_implementation",
+   "relative_path": "src/bucket_compare.py",
+   "requirement_ids": [
+    "REQ-PREP",
+    "REQ-BUCKET-SIZE"
+   ],
+   "used_for": "Median-split ordering used by the model; Morton vs median comparison that selected median splits."
+  },
+  {
+   "category": "reference_implementation",
+   "relative_path": "src/knn_data.py",
+   "requirement_ids": [
+    "REQ-INPUT-FORMAT",
+    "REQ-INPUT-RANGE"
+   ],
+   "used_for": "Quantization to int16 cm with clamp +/-120 m and KITTI loading."
+  },
+  {
+   "category": "test_vector_generator",
+   "relative_path": "src/gen_knn1_vectors.py",
+   "requirement_ids": [
+    "REQ-SIZES",
+    "REQ-OUTPUT-FORMAT",
+    "REQ-TIES",
+    "REQ-EXACT"
+   ],
+   "used_for": "Generates the 25 correctness cases with independent cKDTree expected results."
+  },
+  {
+   "category": "test_vectors",
+   "relative_path": "testdata/knn1_bucket/manifest.json",
+   "requirement_ids": [
+    "REQ-EXACT",
+    "REQ-TIES",
+    "REQ-SIZES"
+   ],
+   "used_for": "Case list with sizes, SHA-256, sum_dist2 and tie counts."
+  },
+  {
+   "category": "workload",
+   "relative_path": "results/knn1_bucket_model.csv",
+   "requirement_ids": [
+    "REQ-STATS",
+    "REQ-PERF"
+   ],
+   "used_for": "Model work counts (buckets fetched, box checks, distance evaluations) on 200 KITTI pairs at bucket sizes 256 and 512."
+  },
+  {
+   "category": "workload",
+   "relative_path": "results/bucket_compare.csv",
+   "requirement_ids": [
+    "REQ-PREP"
+   ],
+   "used_for": "Morton vs median-split comparison on 200 KITTI pairs."
+  },
+  {
+   "category": "workload",
+   "relative_path": "results/frames.txt",
+   "requirement_ids": [
+    "REQ-PERF"
+   ],
+   "used_for": "Fixed KITTI frame-pair list the KITTI cases are drawn from."
+  }
+ ],
+ "public_sources": [
+  {
+   "title": "cuPVA API: cupva::GatherScatterDataFlow",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/pva_sdk_apis/classcupva_1_1GatherScatterDataFlow.md",
+   "packaged_source": "pva_sdk_apis/classcupva_1_1GatherScatterDataFlow.html",
+   "source_sha256": "ea7644a25f1ef91f636fda851d311caa3adadd0c4150f3d50d4a9cf1de557bfd",
+   "version": "2.10.1",
+   "sections": "src(), dst(), tile(), numTilesPerTrigger()",
+   "requirement_ids": [
+    "REQ-PREP"
+   ],
+   "design_constraints": [
+    "DC-GSDF"
+   ]
+  },
+  {
+   "title": "PVA SDK tutorial: ROI Gather via GatherScatter Dataflow (host and device code)",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/tutorial/roi-align-host.md",
+   "packaged_source": "tutorial/roi-align-host.html",
+   "source_sha256": "e4e24205f80a37c0d46a409ec05f437682941db0732d814dcbca1cfd27a554f2",
+   "version": "2.10.1",
+   "sections": "Device code (cupvaGSDFOpen/UpdateTiles/Trig/Sync/Close); Host code (GatherScatterDataFlow setup)",
+   "requirement_ids": [],
+   "design_constraints": [
+    "DC-GSDF"
+   ]
+  },
+  {
+   "title": "cuPVA header listing: cupva_types.h",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/pva_sdk_apis/program_listing_file_cupva_types.h.md",
+   "packaged_source": "pva_sdk_apis/program_listing_file_cupva_types.h.html",
+   "source_sha256": "0b61630503ee5c28a68f2dfd63a9a20a37e213a85e5225a93237cbb386d0a22a",
+   "version": "2.10.1",
+   "sections": "line 94: #define GSDF_MAX_NUM_TILES (32U)",
+   "requirement_ids": [],
+   "design_constraints": [
+    "DC-GSDF"
+   ]
+  },
+  {
+   "title": "PVA SDK tutorial: VMEM scalars and batch submission",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/tutorial/vmem-scalars.md",
+   "packaged_source": "tutorial/vmem-scalars.html",
+   "source_sha256": "e19020fd6f371fca500f7cdaa818720e0b014c8e26173d81c3018d85f6a370d9",
+   "version": "2.10.1",
+   "sections": "CmdProgram reuse and resubmission",
+   "requirement_ids": [
+    "REQ-SIZES",
+    "REQ-REPEAT"
+   ],
+   "design_constraints": [
+    "DC-SCALARS"
+   ]
+  },
+  {
+   "title": "cuPVA API: cupva::CmdProgram",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/pva_sdk_apis/classcupva_1_1CmdProgram.md",
+   "packaged_source": "pva_sdk_apis/classcupva_1_1CmdProgram.html",
+   "source_sha256": "2119c8d80b7d20ed2941caacf3f18dc684f78aaff057358ebbc82bb27ccd892e",
+   "version": "2.10.1",
+   "sections": "updateDataFlows()",
+   "requirement_ids": [
+    "REQ-REPEAT"
+   ],
+   "design_constraints": [
+    "DC-SCALARS"
+   ]
+  },
+  {
+   "title": "PVA SDK tutorial: Profiling Tools",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/tutorial/profiling-tools.md",
+   "packaged_source": "tutorial/profiling-tools.html",
+   "source_sha256": "af8c2a35f55d71034a1ebc4fc86704075a7c6edee763adc8370909c59f5cf93c",
+   "version": "2.10.1",
+   "sections": "Timestamp Counter (TSC); Profiling Stream",
+   "requirement_ids": [
+    "REQ-PERF"
+   ],
+   "design_constraints": [
+    "DC-TSC"
+   ]
+  },
+  {
+   "title": "PVA SDK tutorial: VMEM buffers and DataFlows",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/html/tutorial/vmem-buffers-dataflows.md",
+   "packaged_source": "tutorial/vmem-buffers-dataflows.html",
+   "source_sha256": "b98635d81bdc243e6cef61e645a4659c647963790bc6fc85369fbbc0ecb73fcb",
+   "version": "2.10.1",
+   "sections": "DataFlow types",
+   "requirement_ids": [],
+   "design_constraints": [
+    "DC-DMA"
+   ]
+  },
+  {
+   "title": "Thor PVA VPU Programmer's Guide, Ch. 2 Architecture Overview",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/guides/thor/02-architecture-overview.md",
+   "packaged_source": "_downloads/4b0cb81071f7879ee61d3dd450fb77f1/Thor_PVA_VPU_Programmers_Guide.pdf",
+   "source_sha256": "6e754ea330087504fc0ddeac6ee8600a3c06e9ca045662221d3b505aa787e02f",
+   "version": "2.10.1",
+   "sections": "PDF p. 12-14",
+   "requirement_ids": [
+    "REQ-GEN3"
+   ],
+   "design_constraints": [
+    "DC-DMA"
+   ]
+  },
+  {
+   "title": "Thor PVA VPU Programmer's Guide, Ch. 5 VMEM",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/guides/thor/05-vector-memory-vmem.md",
+   "packaged_source": "_downloads/4b0cb81071f7879ee61d3dd450fb77f1/Thor_PVA_VPU_Programmers_Guide.pdf",
+   "source_sha256": "6e754ea330087504fc0ddeac6ee8600a3c06e9ca045662221d3b505aa787e02f",
+   "version": "2.10.1",
+   "sections": "PDF p. 29",
+   "requirement_ids": [
+    "REQ-SIZES"
+   ],
+   "design_constraints": [
+    "DC-VMEM"
+   ]
+  },
+  {
+   "title": "Thor PVA VPU Programmer's Guide, Ch. 6 ISA (overview only)",
+   "sdk_doc_root": "/opt/nvidia/pva-sdk-2.10/share/doc",
+   "local_markdown": "/home/sitotaem/pva-work/references/sdk/guides/thor/06-instruction-set-architecture.md",
+   "packaged_source": "_downloads/4b0cb81071f7879ee61d3dd450fb77f1/Thor_PVA_VPU_Programmers_Guide.pdf",
+   "source_sha256": "6e754ea330087504fc0ddeac6ee8600a3c06e9ca045662221d3b505aa787e02f",
+   "version": "2.10.1",
+   "sections": "6.2.3 (PDF p. 46-47), 6.2.3.1 (p. 47), 6.2.3.5 (p. 50)",
+   "requirement_ids": [
+    "REQ-DIST"
+   ],
+   "design_constraints": [
+    "DC-LANES",
+    "DC-COMPARE"
+   ]
+  }
+ ],
+ "user_sources": [
+  {
+   "source": "/home/sitotaem/pva-knn-study/CLAUDE.md: int16 cm quantization with +/-120 m clamp, int32 distances, exact reference on quantized inputs, EMU then loki, GEN3 only, MAXN-dvfs measurement rules, p50/p99, >= 1000 samples, tegrastats.",
+   "requirement_ids": [
+    "REQ-INPUT-FORMAT",
+    "REQ-INPUT-RANGE",
+    "REQ-DIST",
+    "REQ-EXACT",
+    "REQ-TIES",
+    "REQ-GEN3",
+    "REQ-PERF"
+   ]
+  },
+  {
+   "source": "User, session 2026-11-14: 'Do as much optimization as possible including these 4 [cheaper ranking with the team box, faster scan loop, both VPUs, double buffering/prefetch] ... let's see how much we can reduce the overall time'; then 'go in that order and finish up'.",
+   "requirement_ids": [
+    "REQ-BUCKET-SIZE",
+    "REQ-GEN3",
+    "REQ-PREP",
+    "REQ-API",
+    "REQ-STATS",
+    "REQ-PERF"
+   ]
+  },
+  {
+   "source": "User, session 2026-11-13: build a 1-NN point-cloud distance PVA kernel (for each P1 point the nearest P2 point and its distance, combined with a Euclidean norm); bucketing approach; 'try it both ways' (Morton vs median, result: median); approved proceeding with the proposed decisions (outputs d2+idx, host sqrt(sum d2), runtime sizes up to 131072, CPU bucket preparation shipped with the operator and timed separately, bucket 512 first, one VPS).",
+   "requirement_ids": [
+    "REQ-PROBLEM",
+    "REQ-EXACT",
+    "REQ-SIZES",
+    "REQ-OUTPUT-FORMAT",
+    "REQ-PREP",
+    "REQ-BUCKET-SIZE",
+    "REQ-STATS",
+    "REQ-ALIASING",
+    "REQ-REPEAT",
+    "REQ-PERF"
+   ]
+  }
+ ],
+ "assumptions": [
+  {
+   "id": "ASM-PLANAR",
+   "text": "Inputs are planar int16 [3][n] (all x, then all y, then all z).",
+   "requirement_ids": [
+    "REQ-INPUT-FORMAT"
+   ],
+   "disposition": "proposed by Claude; approved by the user 2026-11-13"
+  },
+  {
+   "id": "ASM-HOST-IO",
+   "text": "Inputs and outputs are host-memory arrays (not cuPVA allocations) because prepare() reorders them on the CPU anyway and results() restores the original order on the CPU; internal device buffers are owned by the operator.",
+   "requirement_ids": [
+    "REQ-API",
+    "REQ-INPUT-FORMAT",
+    "REQ-OUTPUT-FORMAT",
+    "REQ-ALIASING"
+   ],
+   "disposition": "proposed by Claude; approved by the user 2026-11-13"
+  },
+  {
+   "id": "ASM-API",
+   "text": "API shape init/prepare/submit/results/stats with nonzero return codes and no exceptions; sumDist2 helper in int64; the sqrt and Chamfer combination are left to the caller.",
+   "requirement_ids": [
+    "REQ-API",
+    "REQ-ERRORS",
+    "REQ-PROBLEM"
+   ],
+   "disposition": "proposed by Claude; approved by the user 2026-11-13"
+  },
+  {
+   "id": "ASM-STATS",
+   "text": "The kernel counts buckets fetched and reports them through stats() (diagnostic output, small extra DMA).",
+   "requirement_ids": [
+    "REQ-STATS"
+   ],
+   "disposition": "proposed by Claude; approved by the user 2026-11-13"
+  },
+  {
+   "id": "ASM-TWO-VPS",
+   "text": "Both VPS by default, each with its own VPU program for a contiguous half of the teams (replaces ASM-ONE-VPS of 2026-11-13).",
+   "requirement_ids": [
+    "REQ-GEN3",
+    "REQ-PERF"
+   ],
+   "disposition": "user request 2026-11-14 (optimize, including both VPUs)"
+  },
+  {
+   "id": "ASM-PREP-THREADS",
+   "text": "prepare() runs on one CPU thread by default (keeps the CPU load low); more threads on request via init(). Performance cases use 1 thread; other thread counts are reported separately as preliminary.",
+   "requirement_ids": [
+    "REQ-PREP",
+    "REQ-PERF"
+   ],
+   "disposition": "proposed by Claude 2026-11-14 under the user's optimization request"
+  }
+ ],
+ "conflicts": [
+  {
+   "id": "CONFLICT-CLOCKS",
+   "description": "The pva-build-test performance procedure prefers pinned clocks; CLAUDE.md forbids changing clocks on the shared loki.",
+   "resolution": "CLAUDE.md (explicit user requirement) wins: clock_mode=MAXN-dvfs, clocks recorded, not pinned.",
+   "requirement_ids": [
+    "REQ-PERF"
+   ]
+  }
+ ]
+}

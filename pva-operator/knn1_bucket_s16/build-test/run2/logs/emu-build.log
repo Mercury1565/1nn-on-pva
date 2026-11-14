@@ -1,0 +1,46 @@
+[  3%] Building CXX object CMakeFiles/knn1_bucket_s16_ref.dir/ref/knn1_ref.cpp.o
+[  7%] Generating knn1_bucket_s16_dev__gen3_objects.builddir/vpu/knn1_bucket_s16_dev.o
+clang++: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]
+[ 10%] Linking CXX static library libknn1_bucket_s16_ref.a
+[ 10%] Built target knn1_bucket_s16_ref
+clang++: warning: treating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated]
+[ 10%] Built target knn1_bucket_s16_dev__gen3_objects
+[ 17%] Preprocessing linker script for knn1_bucket_s16_dev__gen3
+[ 17%] Preprocessing linker script for knn1_bucket_s16_dev__gen3
+clang++: warning: future releases of the clang compiler will prefer GCC installations containing libstdc++ include directories; '/usr/lib/gcc/x86_64-linux-gnu/11' would be chosen over '/usr/lib/gcc/x86_64-linux-gnu/13' [-Wgcc-install-dir-libstdcxx]
+clang++: warning: future releases of the clang compiler will prefer GCC installations containing libstdc++ include directories; '/usr/lib/gcc/x86_64-linux-gnu/11' would be chosen over '/usr/lib/gcc/x86_64-linux-gnu/13' [-Wgcc-install-dir-libstdcxx]
+[ 21%] Generating knn1_bucket_s16_dev__gen3.elf
+[ 25%] Generating knn1_bucket_s16_dev__gen3.elf
+[ 25%] Built target knn1_bucket_s16_dev__gen3_elf
+[ 28%] Flipping endianness of knn1_bucket_s16_dev__gen3.elf for runtime compatibility
+[ 28%] Built target knn1_bucket_s16_dev__gen3_elf_flipped
+[ 32%] Generating knn1_bucket_s16_dev__merged.bin
+[ 32%] Built target knn1_bucket_s16_dev
+[ 35%] Generating embed_app_knn1_bucket_s16_dev.s
+[ 42%] Generating pva_allowlist_default_gen3
+[ 42%] Generating pva_allowlist_default_all
+[ 46%] Building CXX object CMakeFiles/knn1_bucket_s16.dir/src/knn1_bucket_s16.cpp.o
+[ 50%] Building CXX object CMakeFiles/knn1_bucket_s16.dir/src/bucket_prep.cpp.o
+[ 53%] Building ASM object CMakeFiles/knn1_bucket_s16.dir/embed_app_knn1_bucket_s16_dev.s.o
+[ 53%] Built target pva_allowlist_default_all_target
+[ 53%] Built target pva_allowlist_default_gen3_target
+[ 57%] Linking CXX static library libknn1_bucket_s16.a
+[ 57%] Built target knn1_bucket_s16
+[ 60%] Building CXX object CMakeFiles/knn1_bucket_s16_test.dir/tests/knn1_bucket_s16_test.cpp.o
+[ 64%] Building CXX object CMakeFiles/knn1_bucket_s16_sample.dir/sample/knn1_bucket_s16_sample.cpp.o
+[ 67%] Building CXX object CMakeFiles/knn1_bucket_s16_perf.dir/perf/knn1_bucket_s16_perf.cpp.o
+[ 71%] Building CXX object CMakeFiles/knn1_bucket_s16_kitti.dir/sample/knn1_bucket_s16_kitti.cpp.o
+[ 75%] Building CXX object CMakeFiles/knn1_bucket_s16_diag.dir/perf/knn1_bucket_s16_diag.cpp.o
+[ 78%] Building CXX object CMakeFiles/knn1_distance.dir/capi/knn1_distance.cpp.o
+[ 82%] Linking CXX shared library libknn1_distance.so
+[ 85%] Linking CXX executable knn1_bucket_s16_sample
+[ 85%] Built target knn1_distance
+[ 85%] Built target knn1_bucket_s16_sample
+[ 89%] Linking CXX executable knn1_bucket_s16_kitti
+[ 89%] Built target knn1_bucket_s16_kitti
+[ 92%] Linking CXX executable knn1_bucket_s16_perf
+[ 96%] Linking CXX executable knn1_bucket_s16_diag
+[ 96%] Built target knn1_bucket_s16_perf
+[ 96%] Built target knn1_bucket_s16_diag
+[100%] Linking CXX executable knn1_bucket_s16_test
+[100%] Built target knn1_bucket_s16_test

@@ -1,0 +1,18 @@
+== kitti_a
+prepare    n=1000 p50_us=19167.6 p99_us=19317.0 min_us=19082.5 max_us=20337.8
+pva_wall   n=1000 p50_us=105039.8 p99_us=105162.6 min_us=104875.3 max_us=105245.0
+pva_total  n=1000 p50_us=105006.7 p99_us=105130.3 min_us=0.0 max_us=281473475873.5
+vpu_exec   n=1000 p50_us=104987.0 p99_us=105110.2 min_us=0.0 max_us=281473475873.5
+overhead   n=1000 p50_us=16.2 p99_us=17.3 min_us=0.0 max_us=281473475873.5
+results    n=1000 p50_us=336.9 p99_us=353.1 min_us=326.2 max_us=386.4
+e2e        n=1000 p50_us=124543.5 p99_us=124811.1 min_us=124352.1 max_us=125833.8
+case=kitti_a n_query=122987 n_ref=122919 teams=7687 buckets=241 buckets_fetched=12905 warmup=100 samples=1000 profiler_samples=1000 correctness_gate=PASS (bad=0)
+== kitti_b
+prepare    n=1000 p50_us=19326.8 p99_us=19544.4 min_us=19222.5 max_us=19838.7
+pva_wall   n=1000 p50_us=110125.0 p99_us=110201.0 min_us=110083.5 max_us=110267.8
+pva_total  n=1000 p50_us=110091.0 p99_us=110171.8 min_us=0.0 max_us=281473015810.7
+vpu_exec   n=1000 p50_us=110071.2 p99_us=110152.0 min_us=0.0 max_us=281473015810.7
+overhead   n=1000 p50_us=16.1 p99_us=17.5 min_us=0.0 max_us=281473015810.7
+results    n=1000 p50_us=346.6 p99_us=362.2 min_us=333.6 max_us=384.0
+e2e        n=1000 p50_us=129800.9 p99_us=130019.9 min_us=129692.4 max_us=130298.9
+case=kitti_b n_query=122563 n_ref=122753 teams=7661 buckets=240 buckets_fetched=14222 warmup=100 samples=1000 profiler_samples=1000 correctness_gate=PASS (bad=0)
